@@ -54,8 +54,14 @@ struct ServiceAddHTTPRequest {
     21: i32 upstreamMaxIdle (api.body="upstream_max_idle")
 }
 
+struct ServiceUpdateHTTPRequest {
+    1: required i32 ID (api.path="id" api.vd="$ > 0")
+}
+
 service services {
     ServiceListResponse ServiceList(1: ServiceListRequest req) (api.get="/service/list")
-    MessageResponse ServiceDelete(1: ServiceDeleteRequest req) (api.delete="/service/delete")
+    MessageResponse ServiceDelete(1: ServiceDeleteRequest req) (api.delete="/service/delete/:id")
     MessageResponse ServiceAddHTTP(1: ServiceAddHTTPRequest req) (api.post="/service/add/http")
+    MessageResponse ServiceUpdateHTTP(1: ServiceUpdateHTTPRequest req) (api.put="/service/update/:id")
 }
+

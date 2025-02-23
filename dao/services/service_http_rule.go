@@ -18,11 +18,11 @@ func (s *ServiceHttpRule) TableName() string {
 	return "go_gateway_service_http_rule"
 }
 
-// Handler Methods
+// Repository Methods
 
-type ServiceHttpRuleHandler struct{}
+type ServiceHttpRuleRepository struct{}
 
-func (shr *ServiceHttpRuleHandler) Find(dt *ServiceHttpRule) (*ServiceHttpRule, error) {
+func (shr *ServiceHttpRuleRepository) Find(dt *ServiceHttpRule) (*ServiceHttpRule, error) {
 	result := &ServiceHttpRule{}
 	err := dao.DB.Table(dt.TableName()).Where(dt).First(&result).Error
 	if err != nil {
@@ -31,6 +31,6 @@ func (shr *ServiceHttpRuleHandler) Find(dt *ServiceHttpRule) (*ServiceHttpRule, 
 	return result, nil
 }
 
-func (shr *ServiceHttpRuleHandler) Save(dt *ServiceHttpRule) error {
+func (shr *ServiceHttpRuleRepository) Save(dt *ServiceHttpRule) error {
 	return dao.DB.Save(dt).Error
 }

@@ -7,6 +7,7 @@ import (
 	adminDAO "GoGateway/dao/admin"
 	"GoGateway/pkg/consts/session"
 	"GoGateway/pkg/status"
+	"GoGateway/svc/admin"
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
@@ -28,9 +29,9 @@ func AdminLogin(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	adminHandler := adminDAO.NewAdminHandler()
+	svc := adminSVC.AdminSvcLayer{}
 
-	user, err := adminHandler.LoginAndCheck(&adminDAO.Admin{
+	user, err := svc.LoginAndCheck(&adminDAO.Admin{
 		Username: req.Username,
 		Password: req.Password,
 	})
@@ -124,9 +125,9 @@ func ChangePassword(ctx context.Context, c *app.RequestContext) {
 	}
 	userInfo := r.(adminDAO.AdminSessionInfo)
 
-	handler := adminDAO.AdminHandler{}
+	svc := adminSVC.AdminSvcLayer{}
 
-	err = handler.UpdatePassword(userInfo.ID, req.Password)
+	err = svc.UpdatePassword(userInfo.ID, req.Password)
 	if err != nil {
 		status.ErrToHttpResponse(c, err)
 		return

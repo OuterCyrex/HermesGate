@@ -19,11 +19,11 @@ func (s *ServiceAccessControl) TableName() string {
 	return "go_gateway_service_access_control"
 }
 
-// Handler Methods
+// Repository Methods
 
-type ServiceAccessControlHandler struct{}
+type ServiceAccessControlRepository struct{}
 
-func (sac *ServiceAccessControlHandler) Find(dt *ServiceAccessControl) (*ServiceAccessControl, error) {
+func (sac *ServiceAccessControlRepository) Find(dt *ServiceAccessControl) (*ServiceAccessControl, error) {
 	result := &ServiceAccessControl{}
 	err := dao.DB.Table(dt.TableName()).Where(dt).First(&result).Error
 	if err != nil {
@@ -32,6 +32,6 @@ func (sac *ServiceAccessControlHandler) Find(dt *ServiceAccessControl) (*Service
 	return result, nil
 }
 
-func (sac *ServiceAccessControlHandler) Save(dt *ServiceAccessControl) error {
+func (sac *ServiceAccessControlRepository) Save(dt *ServiceAccessControl) error {
 	return dao.DB.Save(dt).Error
 }

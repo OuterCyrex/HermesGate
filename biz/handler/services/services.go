@@ -8,6 +8,7 @@ import (
 	serviceDAO "GoGateway/dao/services"
 	serviceConsts "GoGateway/pkg/consts/service"
 	"GoGateway/pkg/status"
+	serviceSVC "GoGateway/svc/services"
 	"context"
 	"fmt"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
@@ -29,9 +30,9 @@ func ServiceList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	handler := serviceDAO.ServiceInfoHandler{}
+	svc := serviceSVC.ServiceInfoSvcLayer{}
 
-	total, serviceList, err := handler.PageList(req.Info, req.PageNum, req.PageSize)
+	total, serviceList, err := svc.PageList(req.Info, req.PageNum, req.PageSize)
 	if err != nil {
 		status.ErrToHttpResponse(c, err)
 		return
@@ -40,7 +41,7 @@ func ServiceList(ctx context.Context, c *app.RequestContext) {
 	var respList []*services.ServiceInfoResponse
 
 	for _, s := range serviceList {
-		serviceDetail, err := handler.ServiceDetail(&s)
+		serviceDetail, err := svc.ServiceDetail(&s)
 		if err != nil {
 			status.ErrToHttpResponse(c, err)
 			return
@@ -94,9 +95,9 @@ func ServiceDelete(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	handler := serviceDAO.ServiceInfoHandler{}
+	repository := serviceDAO.ServiceInfoRepository{}
 
-	err = handler.Delete(uint(req.ID))
+	err = repository.Delete(uint(req.ID))
 	if err != nil {
 		status.ErrToHttpResponse(c, err)
 		return
@@ -122,21 +123,27 @@ func ServiceAddHTTP(ctx context.Context, c *app.RequestContext) {
 
 	// validate input
 
-	infoHandler := serviceDAO.ServiceInfoHandler{}
-	if _, err = infoHandler.Find(&serviceDAO.ServiceInfo{ServiceName: req.ServiceName}); err == nil {
+	infoRepo := serviceDAO.ServiceInfoRepository{}
+	if _, err = infoRepo.Find(&serviceDAO.ServiceInfo{ServiceName: req.ServiceName}); err == nil {
 		c.JSON(http.StatusConflict, status.NewErrorResponse("服务名已被占用"))
 		return
 	}
 
-	httpHandler := serviceDAO.ServiceHttpRuleHandler{}
-	_, err = httpHandler.Find(&serviceDAO.ServiceHttpRule{RuleType: int(req.RuleType), Rule: req.Rule})
-	if _, err = infoHandler.Find(&serviceDAO.ServiceInfo{ServiceName: req.ServiceName}); err == nil {
+	httpRepo := serviceDAO.ServiceHttpRuleRepository{}
+	if _, err = httpRepo.Find(&serviceDAO.ServiceHttpRule{RuleType: int(req.RuleType), Rule: req.Rule}); err == nil {
 		c.JSON(http.StatusConflict, status.NewErrorResponse("服务接入前缀或域名已存在"))
 		return
 	}
 
 	if len(strings.Split(req.IpList, "\n")) != len(strings.Split(req.WeightList, "\n")) {
 		c.JSON(http.StatusBadRequest, status.NewErrorResponse("ip与权重列表不等"))
+		return
+	}
+
+	svc := serviceSVC.ServiceInfoSvcLayer{}
+
+	if err := svc.NewHTTPService(req); err != nil {
+		status.ErrToHttpResponse(c, err)
 		return
 	}
 

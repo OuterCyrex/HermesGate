@@ -23,11 +23,11 @@ func (s *ServiceLoadBalance) TableName() string {
 	return "go_gateway_service_load_balance"
 }
 
-// Handler Methods
+// Repository Methods
 
-type ServiceLoadBalanceHandler struct{}
+type ServiceLoadBalanceRepository struct{}
 
-func (slb *ServiceLoadBalanceHandler) Find(dt *ServiceLoadBalance) (*ServiceLoadBalance, error) {
+func (slb *ServiceLoadBalanceRepository) Find(dt *ServiceLoadBalance) (*ServiceLoadBalance, error) {
 	result := &ServiceLoadBalance{}
 	err := dao.DB.Table(dt.TableName()).Where(dt).First(&result).Error
 	if err != nil {
@@ -36,6 +36,6 @@ func (slb *ServiceLoadBalanceHandler) Find(dt *ServiceLoadBalance) (*ServiceLoad
 	return result, nil
 }
 
-func (slb *ServiceLoadBalanceHandler) Save(dt *ServiceLoadBalance) error {
+func (slb *ServiceLoadBalanceRepository) Save(dt *ServiceLoadBalance) error {
 	return dao.DB.Save(dt).Error
 }

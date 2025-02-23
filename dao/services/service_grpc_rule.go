@@ -13,11 +13,11 @@ func (sgr *ServiceGRPCRule) TableName() string {
 	return "go_gateway_service_grpc_rule"
 }
 
-// Handler Methods
+// Repository Methods
 
-type ServiceGRPCRuleHandler struct{}
+type ServiceGRPCRuleRepository struct{}
 
-func (sgr *ServiceGRPCRuleHandler) Find(dt *ServiceGRPCRule) (*ServiceGRPCRule, error) {
+func (sgr *ServiceGRPCRuleRepository) Find(dt *ServiceGRPCRule) (*ServiceGRPCRule, error) {
 	result := &ServiceGRPCRule{}
 	err := dao.DB.Table(dt.TableName()).Where(dt).First(&result).Error
 	if err != nil {
@@ -26,6 +26,6 @@ func (sgr *ServiceGRPCRuleHandler) Find(dt *ServiceGRPCRule) (*ServiceGRPCRule, 
 	return result, nil
 }
 
-func (sgr *ServiceGRPCRuleHandler) Save(dt *ServiceGRPCRule) error {
+func (sgr *ServiceGRPCRuleRepository) Save(dt *ServiceGRPCRule) error {
 	return dao.DB.Save(dt).Error
 }
