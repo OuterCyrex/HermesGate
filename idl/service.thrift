@@ -92,6 +92,51 @@ struct ServiceAddGrpcRequest {
     14: string forbidList (api.body="forbid_list")
 }
 
+struct ServiceUpdateGrpcRequest {
+    1: required i32 ID (api.path="id" api.vd="$ > 0")
+    2: string headerTransfer (api.body="header_transfer")
+    3: required i8 openAuth (api.body="open_auth")
+    4: string blackList (api.body="black_list")
+    5: string whiteList (api.body="white_list")
+    6: string whiteHostName (api.body="white_host_name")
+    7: i32 clientIPFlowLimit (api.body="client_ip_flow_limit")
+    8: i32 serviceFlowLimit (api.body="service_flow_limit")
+    9: required i8 roundType (api.body="round_type" api.vd="$ <= 2 && $ >= 0")
+    10: required string ipList (api.body="ip_list")
+    11: required string weightList (api.body="weightList")
+    12: string forbidList (api.body="forbid_list")
+}
+
+struct ServiceAddTcpRequest {
+    1: required string serviceName (api.body="service_name" api.vd="6 <= len($) && len($) <= 128")
+    2: required string serviceDesc (api.body="service_desc" api.vd="len($) < 255 && len($) > 0")
+    3: required i32 port (api.body="port" api.vd = "$ > 8000 && $ < 65535")
+    4: required i8 openAuth (api.body="open_auth")
+    5: string blackList (api.body="black_list")
+    6: string whiteList (api.body="white_list")
+    7: string whiteHostName (api.body="white_host_name")
+    8: i32 clientIPFlowLimit (api.body="clientip_flow_limit")
+    9: i32 serviceFlowLimit (api.body="service_flow_limit")
+    10: required i8 roundType (api.body="round_type" api.vd="$ <= 2 && $ >= 0")
+    11: required string ipList (api.body="ip_list")
+    12: required string weightList (api.body="weight_list")
+    13: string forbidList (api.body="forbid_list")
+}
+
+struct ServiceUpdateTcpRequest {
+    1: required i32 ID (api.path="id" api.vd="$ > 0")
+    2: required i8 openAuth (api.body="open_auth")
+    3: string blackList (api.body="black_list")
+    4: string whiteList (api.body="white_list")
+    5: string whiteHostName (api.body="white_host_name")
+    6: i32 clientIPFlowLimit (api.body="clientip_flow_limit")
+    7: i32 serviceFlowLimit (api.body="service_flow_limit")
+    8: required i8 roundType (api.body="round_type" api.vd="$ <= 2 && $ >= 0")
+    9: required string ipList (api.body="ip_list")
+    10: required string weightList (api.body="weight_list")
+    11: string forbidList (api.body="forbid_list")
+}
+
 // the interfaces below all belong to serviceDetail
 // DO NOT get mistaken
 
@@ -180,9 +225,12 @@ service services {
     ServiceListResponse ServiceList(1: ServiceListRequest req) (api.get="/service/list")
     MessageResponse ServiceDelete(1: ServiceDeleteRequest req) (api.delete="/service/delete/:id")
     MessageResponse ServiceAddHTTP(1: ServiceAddHTTPRequest req) (api.post="/service/add/http")
-    MessageResponse ServiceUpdateHTTP(1: ServiceUpdateHTTPRequest req) (api.put="/service/update/:id")
+    MessageResponse ServiceUpdateHTTP(1: ServiceUpdateHTTPRequest req) (api.put="/service/update/http/:id")
     ServiceDetailResponse ServiceDetail (1: ServiceDetailRequest req) (api.get="/service/detail/:id")
     ServiceStaticResponse ServiceStatic (1: ServiceStaticRequest req) (api.get="/service/static/:id")
     MessageResponse ServiceAddGRPC (1: ServiceAddGrpcRequest req) (api.post="/service/add/grpc")
+    MessageResponse ServiceAddTCP (1: ServiceAddTcpRequest req) (api.post="/service/add/tcp")
+    MessageResponse ServiceUpdateGRPC (1: ServiceUpdateGrpcRequest req) (api.put="/service/update/grpc/:id")
+    MessageResponse ServiceUpdateTCP (1: ServiceUpdateTcpRequest req) (api.put="/service/update/tcp/:id")
 }
 

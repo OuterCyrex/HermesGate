@@ -259,6 +259,29 @@ func ServiceAddGRPC(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
+	infoRepo := serviceDAO.ServiceInfoRepository{}
+	if _, err = infoRepo.Find(&serviceDAO.ServiceInfo{ServiceName: req.ServiceName}); err == nil {
+		c.JSON(http.StatusConflict, status.NewErrorResponse("服务名已被占用"))
+		return
+	}
+
+	grpcRepo := serviceDAO.ServiceGRPCRuleRepository{}
+	if _, err = grpcRepo.Find(&serviceDAO.ServiceGRPCRule{Port: int(req.Port)}); err == nil {
+		c.JSON(http.StatusConflict, status.NewErrorResponse("端口已被占用"))
+		return
+	}
+
+	tcpRepo := serviceDAO.ServiceTcpRuleRepository{}
+	if _, err = tcpRepo.Find(&serviceDAO.ServiceTcpRule{Port: int(req.Port)}); err == nil {
+		c.JSON(http.StatusConflict, status.NewErrorResponse("端口已被占用"))
+		return
+	}
+
+	if len(strings.Split(req.IpList, "\n")) != len(strings.Split(req.WeightList, "\n")) {
+		c.JSON(http.StatusBadRequest, status.NewErrorResponse("ip与权重列表不等"))
+		return
+	}
+
 	svc := serviceSVC.ServiceInfoSvcLayer{}
 	if err := svc.NewGRPCService(req); err != nil {
 		status.ErrToHttpResponse(c, err)
@@ -268,6 +291,111 @@ func ServiceAddGRPC(ctx context.Context, c *app.RequestContext) {
 	resp := new(services.MessageResponse)
 
 	resp.Message = "GRPC服务创建成功"
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// ServiceAddTCP .
+// @router /service/add/tcp [POST]
+func ServiceAddTCP(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req services.ServiceAddTcpRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, status.NewErrorResponse(err.Error()))
+		return
+	}
+
+	infoRepo := serviceDAO.ServiceInfoRepository{}
+	if _, err = infoRepo.Find(&serviceDAO.ServiceInfo{ServiceName: req.ServiceName}); err == nil {
+		c.JSON(http.StatusConflict, status.NewErrorResponse("服务名已被占用"))
+		return
+	}
+
+	grpcRepo := serviceDAO.ServiceGRPCRuleRepository{}
+	if _, err = grpcRepo.Find(&serviceDAO.ServiceGRPCRule{Port: int(req.Port)}); err == nil {
+		c.JSON(http.StatusConflict, status.NewErrorResponse("端口已被占用"))
+		return
+	}
+
+	tcpRepo := serviceDAO.ServiceTcpRuleRepository{}
+	if _, err = tcpRepo.Find(&serviceDAO.ServiceTcpRule{Port: int(req.Port)}); err == nil {
+		c.JSON(http.StatusConflict, status.NewErrorResponse("端口已被占用"))
+		return
+	}
+
+	if len(strings.Split(req.IpList, "\n")) != len(strings.Split(req.WeightList, "\n")) {
+		c.JSON(http.StatusBadRequest, status.NewErrorResponse("ip与权重列表不等"))
+		return
+	}
+
+	svc := serviceSVC.ServiceInfoSvcLayer{}
+	if err := svc.NewTCPService(req); err != nil {
+		status.ErrToHttpResponse(c, err)
+		return
+	}
+
+	resp := new(services.MessageResponse)
+
+	resp.Message = "TCP服务创建成功"
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// ServiceUpdateGRPC .
+// @router /service/update/grpc/:id [PUT]
+func ServiceUpdateGRPC(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req services.ServiceUpdateGrpcRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, status.NewErrorResponse(err.Error()))
+		return
+	}
+
+	if len(strings.Split(req.IpList, "\n")) != len(strings.Split(req.WeightList, "\n")) {
+		c.JSON(http.StatusBadRequest, status.NewErrorResponse("ip与权重列表不等"))
+		return
+	}
+
+	svc := serviceSVC.ServiceInfoSvcLayer{}
+	if err := svc.UpdateGrpcService(req); err != nil {
+		status.ErrToHttpResponse(c, err)
+		return
+	}
+
+	resp := new(services.MessageResponse)
+
+	resp.Message = "GRPC服务更新成功"
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// ServiceUpdateTCP .
+// @router /service/update/tcp/:id [PUT]
+func ServiceUpdateTCP(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req services.ServiceUpdateTcpRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, status.NewErrorResponse(err.Error()))
+		return
+	}
+
+	if len(strings.Split(req.IpList, "\n")) != len(strings.Split(req.WeightList, "\n")) {
+		c.JSON(http.StatusBadRequest, status.NewErrorResponse("ip与权重列表不等"))
+		return
+	}
+
+	svc := serviceSVC.ServiceInfoSvcLayer{}
+	if err := svc.UpdateTcpService(req); err != nil {
+		status.ErrToHttpResponse(c, err)
+		return
+	}
+
+	resp := new(services.MessageResponse)
+
+	resp.Message = "TCP服务更新成功"
 
 	c.JSON(consts.StatusOK, resp)
 }

@@ -75,3 +75,33 @@ func _serviceaddgrpcMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _serviceaddtcpMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _grpcMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _serviceupdategrpcMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _httpMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _tcpMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _serviceupdatetcpMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

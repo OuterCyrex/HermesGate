@@ -4048,8 +4048,2032 @@ func (p *ServiceAddGrpcRequest) String() string {
 
 }
 
-// the codes below are serviceDetail
-// Do NOT get mistaken
+type ServiceUpdateGrpcRequest struct {
+	ID                int32  `thrift:"ID,1,required" json:"ID,required" path:"id,required" vd:"$ > 0"`
+	HeaderTransfer    string `thrift:"headerTransfer,2" form:"header_transfer" json:"header_transfer"`
+	OpenAuth          int8   `thrift:"openAuth,3,required" form:"open_auth,required" json:"open_auth,required"`
+	BlackList         string `thrift:"blackList,4" form:"black_list" json:"black_list"`
+	WhiteList         string `thrift:"whiteList,5" form:"white_list" json:"white_list"`
+	WhiteHostName     string `thrift:"whiteHostName,6" form:"white_host_name" json:"white_host_name"`
+	ClientIPFlowLimit int32  `thrift:"clientIPFlowLimit,7" form:"client_ip_flow_limit" json:"client_ip_flow_limit"`
+	ServiceFlowLimit  int32  `thrift:"serviceFlowLimit,8" form:"service_flow_limit" json:"service_flow_limit"`
+	RoundType         int8   `thrift:"roundType,9,required" form:"round_type,required" json:"round_type,required" vd:"$ <= 2 && $ >= 0"`
+	IpList            string `thrift:"ipList,10,required" form:"ip_list,required" json:"ip_list,required"`
+	WeightList        string `thrift:"weightList,11,required" form:"weightList,required" json:"weightList,required"`
+	ForbidList        string `thrift:"forbidList,12" form:"forbid_list" json:"forbid_list"`
+}
+
+func NewServiceUpdateGrpcRequest() *ServiceUpdateGrpcRequest {
+	return &ServiceUpdateGrpcRequest{}
+}
+
+func (p *ServiceUpdateGrpcRequest) InitDefault() {
+}
+
+func (p *ServiceUpdateGrpcRequest) GetID() (v int32) {
+	return p.ID
+}
+
+func (p *ServiceUpdateGrpcRequest) GetHeaderTransfer() (v string) {
+	return p.HeaderTransfer
+}
+
+func (p *ServiceUpdateGrpcRequest) GetOpenAuth() (v int8) {
+	return p.OpenAuth
+}
+
+func (p *ServiceUpdateGrpcRequest) GetBlackList() (v string) {
+	return p.BlackList
+}
+
+func (p *ServiceUpdateGrpcRequest) GetWhiteList() (v string) {
+	return p.WhiteList
+}
+
+func (p *ServiceUpdateGrpcRequest) GetWhiteHostName() (v string) {
+	return p.WhiteHostName
+}
+
+func (p *ServiceUpdateGrpcRequest) GetClientIPFlowLimit() (v int32) {
+	return p.ClientIPFlowLimit
+}
+
+func (p *ServiceUpdateGrpcRequest) GetServiceFlowLimit() (v int32) {
+	return p.ServiceFlowLimit
+}
+
+func (p *ServiceUpdateGrpcRequest) GetRoundType() (v int8) {
+	return p.RoundType
+}
+
+func (p *ServiceUpdateGrpcRequest) GetIpList() (v string) {
+	return p.IpList
+}
+
+func (p *ServiceUpdateGrpcRequest) GetWeightList() (v string) {
+	return p.WeightList
+}
+
+func (p *ServiceUpdateGrpcRequest) GetForbidList() (v string) {
+	return p.ForbidList
+}
+
+var fieldIDToName_ServiceUpdateGrpcRequest = map[int16]string{
+	1:  "ID",
+	2:  "headerTransfer",
+	3:  "openAuth",
+	4:  "blackList",
+	5:  "whiteList",
+	6:  "whiteHostName",
+	7:  "clientIPFlowLimit",
+	8:  "serviceFlowLimit",
+	9:  "roundType",
+	10: "ipList",
+	11: "weightList",
+	12: "forbidList",
+}
+
+func (p *ServiceUpdateGrpcRequest) Read(iprot thrift.TProtocol) (err error) {
+	var fieldTypeId thrift.TType
+	var fieldId int16
+	var issetID bool = false
+	var issetOpenAuth bool = false
+	var issetRoundType bool = false
+	var issetIpList bool = false
+	var issetWeightList bool = false
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetID = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 3:
+			if fieldTypeId == thrift.BYTE {
+				if err = p.ReadField3(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetOpenAuth = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField4(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField5(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 6:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField6(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 7:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField7(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 8:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField8(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 9:
+			if fieldTypeId == thrift.BYTE {
+				if err = p.ReadField9(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetRoundType = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 10:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField10(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetIpList = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 11:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField11(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetWeightList = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 12:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField12(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	if !issetID {
+		fieldId = 1
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetOpenAuth {
+		fieldId = 3
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetRoundType {
+		fieldId = 9
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetIpList {
+		fieldId = 10
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetWeightList {
+		fieldId = 11
+		goto RequiredFieldNotSetError
+	}
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ServiceUpdateGrpcRequest[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+RequiredFieldNotSetError:
+	return thrift.NewTProtocolExceptionWithType(thrift.INVALID_DATA, fmt.Errorf("required field %s is not set", fieldIDToName_ServiceUpdateGrpcRequest[fieldId]))
+}
+
+func (p *ServiceUpdateGrpcRequest) ReadField1(iprot thrift.TProtocol) error {
+
+	var _field int32
+	if v, err := iprot.ReadI32(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ID = _field
+	return nil
+}
+func (p *ServiceUpdateGrpcRequest) ReadField2(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.HeaderTransfer = _field
+	return nil
+}
+func (p *ServiceUpdateGrpcRequest) ReadField3(iprot thrift.TProtocol) error {
+
+	var _field int8
+	if v, err := iprot.ReadByte(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.OpenAuth = _field
+	return nil
+}
+func (p *ServiceUpdateGrpcRequest) ReadField4(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.BlackList = _field
+	return nil
+}
+func (p *ServiceUpdateGrpcRequest) ReadField5(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.WhiteList = _field
+	return nil
+}
+func (p *ServiceUpdateGrpcRequest) ReadField6(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.WhiteHostName = _field
+	return nil
+}
+func (p *ServiceUpdateGrpcRequest) ReadField7(iprot thrift.TProtocol) error {
+
+	var _field int32
+	if v, err := iprot.ReadI32(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ClientIPFlowLimit = _field
+	return nil
+}
+func (p *ServiceUpdateGrpcRequest) ReadField8(iprot thrift.TProtocol) error {
+
+	var _field int32
+	if v, err := iprot.ReadI32(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ServiceFlowLimit = _field
+	return nil
+}
+func (p *ServiceUpdateGrpcRequest) ReadField9(iprot thrift.TProtocol) error {
+
+	var _field int8
+	if v, err := iprot.ReadByte(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.RoundType = _field
+	return nil
+}
+func (p *ServiceUpdateGrpcRequest) ReadField10(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.IpList = _field
+	return nil
+}
+func (p *ServiceUpdateGrpcRequest) ReadField11(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.WeightList = _field
+	return nil
+}
+func (p *ServiceUpdateGrpcRequest) ReadField12(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ForbidList = _field
+	return nil
+}
+
+func (p *ServiceUpdateGrpcRequest) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("ServiceUpdateGrpcRequest"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField2(oprot); err != nil {
+			fieldId = 2
+			goto WriteFieldError
+		}
+		if err = p.writeField3(oprot); err != nil {
+			fieldId = 3
+			goto WriteFieldError
+		}
+		if err = p.writeField4(oprot); err != nil {
+			fieldId = 4
+			goto WriteFieldError
+		}
+		if err = p.writeField5(oprot); err != nil {
+			fieldId = 5
+			goto WriteFieldError
+		}
+		if err = p.writeField6(oprot); err != nil {
+			fieldId = 6
+			goto WriteFieldError
+		}
+		if err = p.writeField7(oprot); err != nil {
+			fieldId = 7
+			goto WriteFieldError
+		}
+		if err = p.writeField8(oprot); err != nil {
+			fieldId = 8
+			goto WriteFieldError
+		}
+		if err = p.writeField9(oprot); err != nil {
+			fieldId = 9
+			goto WriteFieldError
+		}
+		if err = p.writeField10(oprot); err != nil {
+			fieldId = 10
+			goto WriteFieldError
+		}
+		if err = p.writeField11(oprot); err != nil {
+			fieldId = 11
+			goto WriteFieldError
+		}
+		if err = p.writeField12(oprot); err != nil {
+			fieldId = 12
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *ServiceUpdateGrpcRequest) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("ID", thrift.I32, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI32(p.ID); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+func (p *ServiceUpdateGrpcRequest) writeField2(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("headerTransfer", thrift.STRING, 2); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.HeaderTransfer); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+func (p *ServiceUpdateGrpcRequest) writeField3(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("openAuth", thrift.BYTE, 3); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteByte(p.OpenAuth); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+}
+func (p *ServiceUpdateGrpcRequest) writeField4(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("blackList", thrift.STRING, 4); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.BlackList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
+}
+func (p *ServiceUpdateGrpcRequest) writeField5(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("whiteList", thrift.STRING, 5); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.WhiteList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
+}
+func (p *ServiceUpdateGrpcRequest) writeField6(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("whiteHostName", thrift.STRING, 6); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.WhiteHostName); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
+}
+func (p *ServiceUpdateGrpcRequest) writeField7(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("clientIPFlowLimit", thrift.I32, 7); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI32(p.ClientIPFlowLimit); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 end error: ", p), err)
+}
+func (p *ServiceUpdateGrpcRequest) writeField8(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("serviceFlowLimit", thrift.I32, 8); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI32(p.ServiceFlowLimit); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 8 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 8 end error: ", p), err)
+}
+func (p *ServiceUpdateGrpcRequest) writeField9(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("roundType", thrift.BYTE, 9); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteByte(p.RoundType); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 9 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 9 end error: ", p), err)
+}
+func (p *ServiceUpdateGrpcRequest) writeField10(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("ipList", thrift.STRING, 10); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.IpList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 10 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 10 end error: ", p), err)
+}
+func (p *ServiceUpdateGrpcRequest) writeField11(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("weightList", thrift.STRING, 11); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.WeightList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 11 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 11 end error: ", p), err)
+}
+func (p *ServiceUpdateGrpcRequest) writeField12(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("forbidList", thrift.STRING, 12); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.ForbidList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 12 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 12 end error: ", p), err)
+}
+
+func (p *ServiceUpdateGrpcRequest) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ServiceUpdateGrpcRequest(%+v)", *p)
+
+}
+
+type ServiceAddTcpRequest struct {
+	ServiceName       string `thrift:"serviceName,1,required" form:"service_name,required" json:"service_name,required" vd:"6 <= len($) && len($) <= 128"`
+	ServiceDesc       string `thrift:"serviceDesc,2,required" form:"service_desc,required" json:"service_desc,required" vd:"len($) < 255 && len($) > 0"`
+	Port              int32  `thrift:"port,3,required" form:"port,required" json:"port,required" vd:"$ > 8000 && $ < 65535"`
+	OpenAuth          int8   `thrift:"openAuth,4,required" form:"open_auth,required" json:"open_auth,required"`
+	BlackList         string `thrift:"blackList,5" form:"black_list" json:"black_list"`
+	WhiteList         string `thrift:"whiteList,6" form:"white_list" json:"white_list"`
+	WhiteHostName     string `thrift:"whiteHostName,7" form:"white_host_name" json:"white_host_name"`
+	ClientIPFlowLimit int32  `thrift:"clientIPFlowLimit,8" form:"clientip_flow_limit" json:"clientip_flow_limit"`
+	ServiceFlowLimit  int32  `thrift:"serviceFlowLimit,9" form:"service_flow_limit" json:"service_flow_limit"`
+	RoundType         int8   `thrift:"roundType,10,required" form:"round_type,required" json:"round_type,required" vd:"$ <= 2 && $ >= 0"`
+	IpList            string `thrift:"ipList,11,required" form:"ip_list,required" json:"ip_list,required"`
+	WeightList        string `thrift:"weightList,12,required" form:"weight_list,required" json:"weight_list,required"`
+	ForbidList        string `thrift:"forbidList,13" form:"forbid_list" json:"forbid_list"`
+}
+
+func NewServiceAddTcpRequest() *ServiceAddTcpRequest {
+	return &ServiceAddTcpRequest{}
+}
+
+func (p *ServiceAddTcpRequest) InitDefault() {
+}
+
+func (p *ServiceAddTcpRequest) GetServiceName() (v string) {
+	return p.ServiceName
+}
+
+func (p *ServiceAddTcpRequest) GetServiceDesc() (v string) {
+	return p.ServiceDesc
+}
+
+func (p *ServiceAddTcpRequest) GetPort() (v int32) {
+	return p.Port
+}
+
+func (p *ServiceAddTcpRequest) GetOpenAuth() (v int8) {
+	return p.OpenAuth
+}
+
+func (p *ServiceAddTcpRequest) GetBlackList() (v string) {
+	return p.BlackList
+}
+
+func (p *ServiceAddTcpRequest) GetWhiteList() (v string) {
+	return p.WhiteList
+}
+
+func (p *ServiceAddTcpRequest) GetWhiteHostName() (v string) {
+	return p.WhiteHostName
+}
+
+func (p *ServiceAddTcpRequest) GetClientIPFlowLimit() (v int32) {
+	return p.ClientIPFlowLimit
+}
+
+func (p *ServiceAddTcpRequest) GetServiceFlowLimit() (v int32) {
+	return p.ServiceFlowLimit
+}
+
+func (p *ServiceAddTcpRequest) GetRoundType() (v int8) {
+	return p.RoundType
+}
+
+func (p *ServiceAddTcpRequest) GetIpList() (v string) {
+	return p.IpList
+}
+
+func (p *ServiceAddTcpRequest) GetWeightList() (v string) {
+	return p.WeightList
+}
+
+func (p *ServiceAddTcpRequest) GetForbidList() (v string) {
+	return p.ForbidList
+}
+
+var fieldIDToName_ServiceAddTcpRequest = map[int16]string{
+	1:  "serviceName",
+	2:  "serviceDesc",
+	3:  "port",
+	4:  "openAuth",
+	5:  "blackList",
+	6:  "whiteList",
+	7:  "whiteHostName",
+	8:  "clientIPFlowLimit",
+	9:  "serviceFlowLimit",
+	10: "roundType",
+	11: "ipList",
+	12: "weightList",
+	13: "forbidList",
+}
+
+func (p *ServiceAddTcpRequest) Read(iprot thrift.TProtocol) (err error) {
+	var fieldTypeId thrift.TType
+	var fieldId int16
+	var issetServiceName bool = false
+	var issetServiceDesc bool = false
+	var issetPort bool = false
+	var issetOpenAuth bool = false
+	var issetRoundType bool = false
+	var issetIpList bool = false
+	var issetWeightList bool = false
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetServiceName = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetServiceDesc = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 3:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField3(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetPort = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 4:
+			if fieldTypeId == thrift.BYTE {
+				if err = p.ReadField4(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetOpenAuth = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField5(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 6:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField6(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 7:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField7(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 8:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField8(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 9:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField9(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 10:
+			if fieldTypeId == thrift.BYTE {
+				if err = p.ReadField10(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetRoundType = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 11:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField11(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetIpList = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 12:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField12(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetWeightList = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 13:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField13(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	if !issetServiceName {
+		fieldId = 1
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetServiceDesc {
+		fieldId = 2
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetPort {
+		fieldId = 3
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetOpenAuth {
+		fieldId = 4
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetRoundType {
+		fieldId = 10
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetIpList {
+		fieldId = 11
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetWeightList {
+		fieldId = 12
+		goto RequiredFieldNotSetError
+	}
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ServiceAddTcpRequest[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+RequiredFieldNotSetError:
+	return thrift.NewTProtocolExceptionWithType(thrift.INVALID_DATA, fmt.Errorf("required field %s is not set", fieldIDToName_ServiceAddTcpRequest[fieldId]))
+}
+
+func (p *ServiceAddTcpRequest) ReadField1(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ServiceName = _field
+	return nil
+}
+func (p *ServiceAddTcpRequest) ReadField2(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ServiceDesc = _field
+	return nil
+}
+func (p *ServiceAddTcpRequest) ReadField3(iprot thrift.TProtocol) error {
+
+	var _field int32
+	if v, err := iprot.ReadI32(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Port = _field
+	return nil
+}
+func (p *ServiceAddTcpRequest) ReadField4(iprot thrift.TProtocol) error {
+
+	var _field int8
+	if v, err := iprot.ReadByte(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.OpenAuth = _field
+	return nil
+}
+func (p *ServiceAddTcpRequest) ReadField5(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.BlackList = _field
+	return nil
+}
+func (p *ServiceAddTcpRequest) ReadField6(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.WhiteList = _field
+	return nil
+}
+func (p *ServiceAddTcpRequest) ReadField7(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.WhiteHostName = _field
+	return nil
+}
+func (p *ServiceAddTcpRequest) ReadField8(iprot thrift.TProtocol) error {
+
+	var _field int32
+	if v, err := iprot.ReadI32(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ClientIPFlowLimit = _field
+	return nil
+}
+func (p *ServiceAddTcpRequest) ReadField9(iprot thrift.TProtocol) error {
+
+	var _field int32
+	if v, err := iprot.ReadI32(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ServiceFlowLimit = _field
+	return nil
+}
+func (p *ServiceAddTcpRequest) ReadField10(iprot thrift.TProtocol) error {
+
+	var _field int8
+	if v, err := iprot.ReadByte(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.RoundType = _field
+	return nil
+}
+func (p *ServiceAddTcpRequest) ReadField11(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.IpList = _field
+	return nil
+}
+func (p *ServiceAddTcpRequest) ReadField12(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.WeightList = _field
+	return nil
+}
+func (p *ServiceAddTcpRequest) ReadField13(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ForbidList = _field
+	return nil
+}
+
+func (p *ServiceAddTcpRequest) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("ServiceAddTcpRequest"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField2(oprot); err != nil {
+			fieldId = 2
+			goto WriteFieldError
+		}
+		if err = p.writeField3(oprot); err != nil {
+			fieldId = 3
+			goto WriteFieldError
+		}
+		if err = p.writeField4(oprot); err != nil {
+			fieldId = 4
+			goto WriteFieldError
+		}
+		if err = p.writeField5(oprot); err != nil {
+			fieldId = 5
+			goto WriteFieldError
+		}
+		if err = p.writeField6(oprot); err != nil {
+			fieldId = 6
+			goto WriteFieldError
+		}
+		if err = p.writeField7(oprot); err != nil {
+			fieldId = 7
+			goto WriteFieldError
+		}
+		if err = p.writeField8(oprot); err != nil {
+			fieldId = 8
+			goto WriteFieldError
+		}
+		if err = p.writeField9(oprot); err != nil {
+			fieldId = 9
+			goto WriteFieldError
+		}
+		if err = p.writeField10(oprot); err != nil {
+			fieldId = 10
+			goto WriteFieldError
+		}
+		if err = p.writeField11(oprot); err != nil {
+			fieldId = 11
+			goto WriteFieldError
+		}
+		if err = p.writeField12(oprot); err != nil {
+			fieldId = 12
+			goto WriteFieldError
+		}
+		if err = p.writeField13(oprot); err != nil {
+			fieldId = 13
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *ServiceAddTcpRequest) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("serviceName", thrift.STRING, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.ServiceName); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+func (p *ServiceAddTcpRequest) writeField2(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("serviceDesc", thrift.STRING, 2); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.ServiceDesc); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+func (p *ServiceAddTcpRequest) writeField3(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("port", thrift.I32, 3); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI32(p.Port); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+}
+func (p *ServiceAddTcpRequest) writeField4(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("openAuth", thrift.BYTE, 4); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteByte(p.OpenAuth); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
+}
+func (p *ServiceAddTcpRequest) writeField5(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("blackList", thrift.STRING, 5); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.BlackList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
+}
+func (p *ServiceAddTcpRequest) writeField6(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("whiteList", thrift.STRING, 6); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.WhiteList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
+}
+func (p *ServiceAddTcpRequest) writeField7(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("whiteHostName", thrift.STRING, 7); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.WhiteHostName); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 end error: ", p), err)
+}
+func (p *ServiceAddTcpRequest) writeField8(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("clientIPFlowLimit", thrift.I32, 8); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI32(p.ClientIPFlowLimit); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 8 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 8 end error: ", p), err)
+}
+func (p *ServiceAddTcpRequest) writeField9(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("serviceFlowLimit", thrift.I32, 9); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI32(p.ServiceFlowLimit); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 9 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 9 end error: ", p), err)
+}
+func (p *ServiceAddTcpRequest) writeField10(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("roundType", thrift.BYTE, 10); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteByte(p.RoundType); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 10 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 10 end error: ", p), err)
+}
+func (p *ServiceAddTcpRequest) writeField11(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("ipList", thrift.STRING, 11); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.IpList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 11 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 11 end error: ", p), err)
+}
+func (p *ServiceAddTcpRequest) writeField12(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("weightList", thrift.STRING, 12); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.WeightList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 12 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 12 end error: ", p), err)
+}
+func (p *ServiceAddTcpRequest) writeField13(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("forbidList", thrift.STRING, 13); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.ForbidList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 13 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 13 end error: ", p), err)
+}
+
+func (p *ServiceAddTcpRequest) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ServiceAddTcpRequest(%+v)", *p)
+
+}
+
+type ServiceUpdateTcpRequest struct {
+	ID                int32  `thrift:"ID,1,required" json:"ID,required" path:"id,required" vd:"$ > 0"`
+	OpenAuth          int8   `thrift:"openAuth,2,required" form:"open_auth,required" json:"open_auth,required"`
+	BlackList         string `thrift:"blackList,3" form:"black_list" json:"black_list"`
+	WhiteList         string `thrift:"whiteList,4" form:"white_list" json:"white_list"`
+	WhiteHostName     string `thrift:"whiteHostName,5" form:"white_host_name" json:"white_host_name"`
+	ClientIPFlowLimit int32  `thrift:"clientIPFlowLimit,6" form:"clientip_flow_limit" json:"clientip_flow_limit"`
+	ServiceFlowLimit  int32  `thrift:"serviceFlowLimit,7" form:"service_flow_limit" json:"service_flow_limit"`
+	RoundType         int8   `thrift:"roundType,8,required" form:"round_type,required" json:"round_type,required" vd:"$ <= 2 && $ >= 0"`
+	IpList            string `thrift:"ipList,9,required" form:"ip_list,required" json:"ip_list,required"`
+	WeightList        string `thrift:"weightList,10,required" form:"weight_list,required" json:"weight_list,required"`
+	ForbidList        string `thrift:"forbidList,11" form:"forbid_list" json:"forbid_list"`
+}
+
+func NewServiceUpdateTcpRequest() *ServiceUpdateTcpRequest {
+	return &ServiceUpdateTcpRequest{}
+}
+
+func (p *ServiceUpdateTcpRequest) InitDefault() {
+}
+
+func (p *ServiceUpdateTcpRequest) GetID() (v int32) {
+	return p.ID
+}
+
+func (p *ServiceUpdateTcpRequest) GetOpenAuth() (v int8) {
+	return p.OpenAuth
+}
+
+func (p *ServiceUpdateTcpRequest) GetBlackList() (v string) {
+	return p.BlackList
+}
+
+func (p *ServiceUpdateTcpRequest) GetWhiteList() (v string) {
+	return p.WhiteList
+}
+
+func (p *ServiceUpdateTcpRequest) GetWhiteHostName() (v string) {
+	return p.WhiteHostName
+}
+
+func (p *ServiceUpdateTcpRequest) GetClientIPFlowLimit() (v int32) {
+	return p.ClientIPFlowLimit
+}
+
+func (p *ServiceUpdateTcpRequest) GetServiceFlowLimit() (v int32) {
+	return p.ServiceFlowLimit
+}
+
+func (p *ServiceUpdateTcpRequest) GetRoundType() (v int8) {
+	return p.RoundType
+}
+
+func (p *ServiceUpdateTcpRequest) GetIpList() (v string) {
+	return p.IpList
+}
+
+func (p *ServiceUpdateTcpRequest) GetWeightList() (v string) {
+	return p.WeightList
+}
+
+func (p *ServiceUpdateTcpRequest) GetForbidList() (v string) {
+	return p.ForbidList
+}
+
+var fieldIDToName_ServiceUpdateTcpRequest = map[int16]string{
+	1:  "ID",
+	2:  "openAuth",
+	3:  "blackList",
+	4:  "whiteList",
+	5:  "whiteHostName",
+	6:  "clientIPFlowLimit",
+	7:  "serviceFlowLimit",
+	8:  "roundType",
+	9:  "ipList",
+	10: "weightList",
+	11: "forbidList",
+}
+
+func (p *ServiceUpdateTcpRequest) Read(iprot thrift.TProtocol) (err error) {
+	var fieldTypeId thrift.TType
+	var fieldId int16
+	var issetID bool = false
+	var issetOpenAuth bool = false
+	var issetRoundType bool = false
+	var issetIpList bool = false
+	var issetWeightList bool = false
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetID = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 2:
+			if fieldTypeId == thrift.BYTE {
+				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetOpenAuth = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField3(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField4(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField5(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 6:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField6(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 7:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField7(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 8:
+			if fieldTypeId == thrift.BYTE {
+				if err = p.ReadField8(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetRoundType = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 9:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField9(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetIpList = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 10:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField10(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetWeightList = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 11:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField11(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	if !issetID {
+		fieldId = 1
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetOpenAuth {
+		fieldId = 2
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetRoundType {
+		fieldId = 8
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetIpList {
+		fieldId = 9
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetWeightList {
+		fieldId = 10
+		goto RequiredFieldNotSetError
+	}
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ServiceUpdateTcpRequest[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+RequiredFieldNotSetError:
+	return thrift.NewTProtocolExceptionWithType(thrift.INVALID_DATA, fmt.Errorf("required field %s is not set", fieldIDToName_ServiceUpdateTcpRequest[fieldId]))
+}
+
+func (p *ServiceUpdateTcpRequest) ReadField1(iprot thrift.TProtocol) error {
+
+	var _field int32
+	if v, err := iprot.ReadI32(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ID = _field
+	return nil
+}
+func (p *ServiceUpdateTcpRequest) ReadField2(iprot thrift.TProtocol) error {
+
+	var _field int8
+	if v, err := iprot.ReadByte(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.OpenAuth = _field
+	return nil
+}
+func (p *ServiceUpdateTcpRequest) ReadField3(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.BlackList = _field
+	return nil
+}
+func (p *ServiceUpdateTcpRequest) ReadField4(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.WhiteList = _field
+	return nil
+}
+func (p *ServiceUpdateTcpRequest) ReadField5(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.WhiteHostName = _field
+	return nil
+}
+func (p *ServiceUpdateTcpRequest) ReadField6(iprot thrift.TProtocol) error {
+
+	var _field int32
+	if v, err := iprot.ReadI32(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ClientIPFlowLimit = _field
+	return nil
+}
+func (p *ServiceUpdateTcpRequest) ReadField7(iprot thrift.TProtocol) error {
+
+	var _field int32
+	if v, err := iprot.ReadI32(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ServiceFlowLimit = _field
+	return nil
+}
+func (p *ServiceUpdateTcpRequest) ReadField8(iprot thrift.TProtocol) error {
+
+	var _field int8
+	if v, err := iprot.ReadByte(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.RoundType = _field
+	return nil
+}
+func (p *ServiceUpdateTcpRequest) ReadField9(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.IpList = _field
+	return nil
+}
+func (p *ServiceUpdateTcpRequest) ReadField10(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.WeightList = _field
+	return nil
+}
+func (p *ServiceUpdateTcpRequest) ReadField11(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.ForbidList = _field
+	return nil
+}
+
+func (p *ServiceUpdateTcpRequest) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("ServiceUpdateTcpRequest"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField2(oprot); err != nil {
+			fieldId = 2
+			goto WriteFieldError
+		}
+		if err = p.writeField3(oprot); err != nil {
+			fieldId = 3
+			goto WriteFieldError
+		}
+		if err = p.writeField4(oprot); err != nil {
+			fieldId = 4
+			goto WriteFieldError
+		}
+		if err = p.writeField5(oprot); err != nil {
+			fieldId = 5
+			goto WriteFieldError
+		}
+		if err = p.writeField6(oprot); err != nil {
+			fieldId = 6
+			goto WriteFieldError
+		}
+		if err = p.writeField7(oprot); err != nil {
+			fieldId = 7
+			goto WriteFieldError
+		}
+		if err = p.writeField8(oprot); err != nil {
+			fieldId = 8
+			goto WriteFieldError
+		}
+		if err = p.writeField9(oprot); err != nil {
+			fieldId = 9
+			goto WriteFieldError
+		}
+		if err = p.writeField10(oprot); err != nil {
+			fieldId = 10
+			goto WriteFieldError
+		}
+		if err = p.writeField11(oprot); err != nil {
+			fieldId = 11
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *ServiceUpdateTcpRequest) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("ID", thrift.I32, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI32(p.ID); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+func (p *ServiceUpdateTcpRequest) writeField2(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("openAuth", thrift.BYTE, 2); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteByte(p.OpenAuth); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+func (p *ServiceUpdateTcpRequest) writeField3(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("blackList", thrift.STRING, 3); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.BlackList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+}
+func (p *ServiceUpdateTcpRequest) writeField4(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("whiteList", thrift.STRING, 4); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.WhiteList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
+}
+func (p *ServiceUpdateTcpRequest) writeField5(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("whiteHostName", thrift.STRING, 5); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.WhiteHostName); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
+}
+func (p *ServiceUpdateTcpRequest) writeField6(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("clientIPFlowLimit", thrift.I32, 6); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI32(p.ClientIPFlowLimit); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
+}
+func (p *ServiceUpdateTcpRequest) writeField7(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("serviceFlowLimit", thrift.I32, 7); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI32(p.ServiceFlowLimit); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 end error: ", p), err)
+}
+func (p *ServiceUpdateTcpRequest) writeField8(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("roundType", thrift.BYTE, 8); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteByte(p.RoundType); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 8 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 8 end error: ", p), err)
+}
+func (p *ServiceUpdateTcpRequest) writeField9(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("ipList", thrift.STRING, 9); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.IpList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 9 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 9 end error: ", p), err)
+}
+func (p *ServiceUpdateTcpRequest) writeField10(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("weightList", thrift.STRING, 10); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.WeightList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 10 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 10 end error: ", p), err)
+}
+func (p *ServiceUpdateTcpRequest) writeField11(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("forbidList", thrift.STRING, 11); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.ForbidList); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 11 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 11 end error: ", p), err)
+}
+
+func (p *ServiceUpdateTcpRequest) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ServiceUpdateTcpRequest(%+v)", *p)
+
+}
+
+// the interfaces below all belong to serviceDetail
+// DO NOT get mistaken
 type ServiceInfoPart struct {
 	ID          int32  `thrift:"ID,1" form:"ID" json:"ID" query:"ID"`
 	LoadType    int8   `thrift:"LoadType,2" form:"LoadType" json:"LoadType" query:"LoadType"`
@@ -7387,6 +9411,12 @@ type Services interface {
 	ServiceStatic(ctx context.Context, req *ServiceStaticRequest) (r *ServiceStaticResponse, err error)
 
 	ServiceAddGRPC(ctx context.Context, req *ServiceAddGrpcRequest) (r *MessageResponse, err error)
+
+	ServiceAddTCP(ctx context.Context, req *ServiceAddTcpRequest) (r *MessageResponse, err error)
+
+	ServiceUpdateGRPC(ctx context.Context, req *ServiceUpdateGrpcRequest) (r *MessageResponse, err error)
+
+	ServiceUpdateTCP(ctx context.Context, req *ServiceUpdateTcpRequest) (r *MessageResponse, err error)
 }
 
 type ServicesClient struct {
@@ -7478,6 +9508,33 @@ func (p *ServicesClient) ServiceAddGRPC(ctx context.Context, req *ServiceAddGrpc
 	}
 	return _result.GetSuccess(), nil
 }
+func (p *ServicesClient) ServiceAddTCP(ctx context.Context, req *ServiceAddTcpRequest) (r *MessageResponse, err error) {
+	var _args ServicesServiceAddTCPArgs
+	_args.Req = req
+	var _result ServicesServiceAddTCPResult
+	if err = p.Client_().Call(ctx, "ServiceAddTCP", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+func (p *ServicesClient) ServiceUpdateGRPC(ctx context.Context, req *ServiceUpdateGrpcRequest) (r *MessageResponse, err error) {
+	var _args ServicesServiceUpdateGRPCArgs
+	_args.Req = req
+	var _result ServicesServiceUpdateGRPCResult
+	if err = p.Client_().Call(ctx, "ServiceUpdateGRPC", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+func (p *ServicesClient) ServiceUpdateTCP(ctx context.Context, req *ServiceUpdateTcpRequest) (r *MessageResponse, err error) {
+	var _args ServicesServiceUpdateTCPArgs
+	_args.Req = req
+	var _result ServicesServiceUpdateTCPResult
+	if err = p.Client_().Call(ctx, "ServiceUpdateTCP", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
 
 type ServicesProcessor struct {
 	processorMap map[string]thrift.TProcessorFunction
@@ -7506,6 +9563,9 @@ func NewServicesProcessor(handler Services) *ServicesProcessor {
 	self.AddToProcessorMap("ServiceDetail", &servicesProcessorServiceDetail{handler: handler})
 	self.AddToProcessorMap("ServiceStatic", &servicesProcessorServiceStatic{handler: handler})
 	self.AddToProcessorMap("ServiceAddGRPC", &servicesProcessorServiceAddGRPC{handler: handler})
+	self.AddToProcessorMap("ServiceAddTCP", &servicesProcessorServiceAddTCP{handler: handler})
+	self.AddToProcessorMap("ServiceUpdateGRPC", &servicesProcessorServiceUpdateGRPC{handler: handler})
+	self.AddToProcessorMap("ServiceUpdateTCP", &servicesProcessorServiceUpdateTCP{handler: handler})
 	return self
 }
 func (p *ServicesProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -7845,6 +9905,150 @@ func (p *servicesProcessorServiceAddGRPC) Process(ctx context.Context, seqId int
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("ServiceAddGRPC", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type servicesProcessorServiceAddTCP struct {
+	handler Services
+}
+
+func (p *servicesProcessorServiceAddTCP) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := ServicesServiceAddTCPArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("ServiceAddTCP", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	var err2 error
+	result := ServicesServiceAddTCPResult{}
+	var retval *MessageResponse
+	if retval, err2 = p.handler.ServiceAddTCP(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ServiceAddTCP: "+err2.Error())
+		oprot.WriteMessageBegin("ServiceAddTCP", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("ServiceAddTCP", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type servicesProcessorServiceUpdateGRPC struct {
+	handler Services
+}
+
+func (p *servicesProcessorServiceUpdateGRPC) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := ServicesServiceUpdateGRPCArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("ServiceUpdateGRPC", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	var err2 error
+	result := ServicesServiceUpdateGRPCResult{}
+	var retval *MessageResponse
+	if retval, err2 = p.handler.ServiceUpdateGRPC(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ServiceUpdateGRPC: "+err2.Error())
+		oprot.WriteMessageBegin("ServiceUpdateGRPC", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("ServiceUpdateGRPC", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type servicesProcessorServiceUpdateTCP struct {
+	handler Services
+}
+
+func (p *servicesProcessorServiceUpdateTCP) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := ServicesServiceUpdateTCPArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("ServiceUpdateTCP", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	var err2 error
+	result := ServicesServiceUpdateTCPResult{}
+	var retval *MessageResponse
+	if retval, err2 = p.handler.ServiceUpdateTCP(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ServiceUpdateTCP: "+err2.Error())
+		oprot.WriteMessageBegin("ServiceUpdateTCP", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("ServiceUpdateTCP", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -9903,5 +12107,881 @@ func (p *ServicesServiceAddGRPCResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("ServicesServiceAddGRPCResult(%+v)", *p)
+
+}
+
+type ServicesServiceAddTCPArgs struct {
+	Req *ServiceAddTcpRequest `thrift:"req,1"`
+}
+
+func NewServicesServiceAddTCPArgs() *ServicesServiceAddTCPArgs {
+	return &ServicesServiceAddTCPArgs{}
+}
+
+func (p *ServicesServiceAddTCPArgs) InitDefault() {
+}
+
+var ServicesServiceAddTCPArgs_Req_DEFAULT *ServiceAddTcpRequest
+
+func (p *ServicesServiceAddTCPArgs) GetReq() (v *ServiceAddTcpRequest) {
+	if !p.IsSetReq() {
+		return ServicesServiceAddTCPArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+var fieldIDToName_ServicesServiceAddTCPArgs = map[int16]string{
+	1: "req",
+}
+
+func (p *ServicesServiceAddTCPArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ServicesServiceAddTCPArgs) Read(iprot thrift.TProtocol) (err error) {
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ServicesServiceAddTCPArgs[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *ServicesServiceAddTCPArgs) ReadField1(iprot thrift.TProtocol) error {
+	_field := NewServiceAddTcpRequest()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Req = _field
+	return nil
+}
+
+func (p *ServicesServiceAddTCPArgs) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("ServiceAddTCP_args"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *ServicesServiceAddTCPArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *ServicesServiceAddTCPArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ServicesServiceAddTCPArgs(%+v)", *p)
+
+}
+
+type ServicesServiceAddTCPResult struct {
+	Success *MessageResponse `thrift:"success,0,optional"`
+}
+
+func NewServicesServiceAddTCPResult() *ServicesServiceAddTCPResult {
+	return &ServicesServiceAddTCPResult{}
+}
+
+func (p *ServicesServiceAddTCPResult) InitDefault() {
+}
+
+var ServicesServiceAddTCPResult_Success_DEFAULT *MessageResponse
+
+func (p *ServicesServiceAddTCPResult) GetSuccess() (v *MessageResponse) {
+	if !p.IsSetSuccess() {
+		return ServicesServiceAddTCPResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+var fieldIDToName_ServicesServiceAddTCPResult = map[int16]string{
+	0: "success",
+}
+
+func (p *ServicesServiceAddTCPResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ServicesServiceAddTCPResult) Read(iprot thrift.TProtocol) (err error) {
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField0(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ServicesServiceAddTCPResult[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *ServicesServiceAddTCPResult) ReadField0(iprot thrift.TProtocol) error {
+	_field := NewMessageResponse()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Success = _field
+	return nil
+}
+
+func (p *ServicesServiceAddTCPResult) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("ServiceAddTCP_result"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField0(oprot); err != nil {
+			fieldId = 0
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *ServicesServiceAddTCPResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
+}
+
+func (p *ServicesServiceAddTCPResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ServicesServiceAddTCPResult(%+v)", *p)
+
+}
+
+type ServicesServiceUpdateGRPCArgs struct {
+	Req *ServiceUpdateGrpcRequest `thrift:"req,1"`
+}
+
+func NewServicesServiceUpdateGRPCArgs() *ServicesServiceUpdateGRPCArgs {
+	return &ServicesServiceUpdateGRPCArgs{}
+}
+
+func (p *ServicesServiceUpdateGRPCArgs) InitDefault() {
+}
+
+var ServicesServiceUpdateGRPCArgs_Req_DEFAULT *ServiceUpdateGrpcRequest
+
+func (p *ServicesServiceUpdateGRPCArgs) GetReq() (v *ServiceUpdateGrpcRequest) {
+	if !p.IsSetReq() {
+		return ServicesServiceUpdateGRPCArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+var fieldIDToName_ServicesServiceUpdateGRPCArgs = map[int16]string{
+	1: "req",
+}
+
+func (p *ServicesServiceUpdateGRPCArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ServicesServiceUpdateGRPCArgs) Read(iprot thrift.TProtocol) (err error) {
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ServicesServiceUpdateGRPCArgs[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *ServicesServiceUpdateGRPCArgs) ReadField1(iprot thrift.TProtocol) error {
+	_field := NewServiceUpdateGrpcRequest()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Req = _field
+	return nil
+}
+
+func (p *ServicesServiceUpdateGRPCArgs) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("ServiceUpdateGRPC_args"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *ServicesServiceUpdateGRPCArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *ServicesServiceUpdateGRPCArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ServicesServiceUpdateGRPCArgs(%+v)", *p)
+
+}
+
+type ServicesServiceUpdateGRPCResult struct {
+	Success *MessageResponse `thrift:"success,0,optional"`
+}
+
+func NewServicesServiceUpdateGRPCResult() *ServicesServiceUpdateGRPCResult {
+	return &ServicesServiceUpdateGRPCResult{}
+}
+
+func (p *ServicesServiceUpdateGRPCResult) InitDefault() {
+}
+
+var ServicesServiceUpdateGRPCResult_Success_DEFAULT *MessageResponse
+
+func (p *ServicesServiceUpdateGRPCResult) GetSuccess() (v *MessageResponse) {
+	if !p.IsSetSuccess() {
+		return ServicesServiceUpdateGRPCResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+var fieldIDToName_ServicesServiceUpdateGRPCResult = map[int16]string{
+	0: "success",
+}
+
+func (p *ServicesServiceUpdateGRPCResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ServicesServiceUpdateGRPCResult) Read(iprot thrift.TProtocol) (err error) {
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField0(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ServicesServiceUpdateGRPCResult[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *ServicesServiceUpdateGRPCResult) ReadField0(iprot thrift.TProtocol) error {
+	_field := NewMessageResponse()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Success = _field
+	return nil
+}
+
+func (p *ServicesServiceUpdateGRPCResult) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("ServiceUpdateGRPC_result"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField0(oprot); err != nil {
+			fieldId = 0
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *ServicesServiceUpdateGRPCResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
+}
+
+func (p *ServicesServiceUpdateGRPCResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ServicesServiceUpdateGRPCResult(%+v)", *p)
+
+}
+
+type ServicesServiceUpdateTCPArgs struct {
+	Req *ServiceUpdateTcpRequest `thrift:"req,1"`
+}
+
+func NewServicesServiceUpdateTCPArgs() *ServicesServiceUpdateTCPArgs {
+	return &ServicesServiceUpdateTCPArgs{}
+}
+
+func (p *ServicesServiceUpdateTCPArgs) InitDefault() {
+}
+
+var ServicesServiceUpdateTCPArgs_Req_DEFAULT *ServiceUpdateTcpRequest
+
+func (p *ServicesServiceUpdateTCPArgs) GetReq() (v *ServiceUpdateTcpRequest) {
+	if !p.IsSetReq() {
+		return ServicesServiceUpdateTCPArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+var fieldIDToName_ServicesServiceUpdateTCPArgs = map[int16]string{
+	1: "req",
+}
+
+func (p *ServicesServiceUpdateTCPArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ServicesServiceUpdateTCPArgs) Read(iprot thrift.TProtocol) (err error) {
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ServicesServiceUpdateTCPArgs[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *ServicesServiceUpdateTCPArgs) ReadField1(iprot thrift.TProtocol) error {
+	_field := NewServiceUpdateTcpRequest()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Req = _field
+	return nil
+}
+
+func (p *ServicesServiceUpdateTCPArgs) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("ServiceUpdateTCP_args"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *ServicesServiceUpdateTCPArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *ServicesServiceUpdateTCPArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ServicesServiceUpdateTCPArgs(%+v)", *p)
+
+}
+
+type ServicesServiceUpdateTCPResult struct {
+	Success *MessageResponse `thrift:"success,0,optional"`
+}
+
+func NewServicesServiceUpdateTCPResult() *ServicesServiceUpdateTCPResult {
+	return &ServicesServiceUpdateTCPResult{}
+}
+
+func (p *ServicesServiceUpdateTCPResult) InitDefault() {
+}
+
+var ServicesServiceUpdateTCPResult_Success_DEFAULT *MessageResponse
+
+func (p *ServicesServiceUpdateTCPResult) GetSuccess() (v *MessageResponse) {
+	if !p.IsSetSuccess() {
+		return ServicesServiceUpdateTCPResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+var fieldIDToName_ServicesServiceUpdateTCPResult = map[int16]string{
+	0: "success",
+}
+
+func (p *ServicesServiceUpdateTCPResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ServicesServiceUpdateTCPResult) Read(iprot thrift.TProtocol) (err error) {
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField0(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ServicesServiceUpdateTCPResult[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *ServicesServiceUpdateTCPResult) ReadField0(iprot thrift.TProtocol) error {
+	_field := NewMessageResponse()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Success = _field
+	return nil
+}
+
+func (p *ServicesServiceUpdateTCPResult) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("ServiceUpdateTCP_result"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField0(oprot); err != nil {
+			fieldId = 0
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *ServicesServiceUpdateTCPResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
+}
+
+func (p *ServicesServiceUpdateTCPResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ServicesServiceUpdateTCPResult(%+v)", *p)
 
 }

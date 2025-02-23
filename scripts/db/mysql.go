@@ -3,6 +3,7 @@ package main
 import (
 	"GoGateway/dao"
 	adminDAO "GoGateway/dao/admin"
+	applicationDAO "GoGateway/dao/application"
 	serviceDAO "GoGateway/dao/services"
 )
 
@@ -17,6 +18,7 @@ func main() {
 		&serviceDAO.ServiceTcpRule{},
 		&serviceDAO.ServiceLoadBalance{},
 		&serviceDAO.ServiceAccessControl{},
+		&applicationDAO.Application{},
 	)
 	if err != nil {
 		panic(err)
