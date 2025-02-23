@@ -2,10 +2,10 @@ namespace go services
 
 struct ServiceListResponse {
      1: i64 total
-     2: list<ServiceInfoResponse> data
+     2: list<ServiceListItemResponse> data
 }
 
-struct ServiceInfoResponse {
+struct ServiceListItemResponse {
    1: i32 Id
    2: string serviceName
    3: string serviceDesc
@@ -35,7 +35,7 @@ struct ServiceAddHTTPRequest {
     2: required string serviceDesc (api.body="service_desc" api.vd="len($) < 255 && len($) > 0")
     3: required i8 ruleType (api.body="rule_type" api.vd="$ <= 1 && $ >= 0")
     4: required string rule (api.body="rule")
-    5: required i8 needHTTP(api.body="need_http" api.vd="$ <= 1 && $ >= 0")
+    5: required i8 needHTTPS(api.body="need_https" api.vd="$ <= 1 && $ >= 0")
     6: required i8 needStripUri (api.body="need_strip_uri" api.vd="$ <= 1 && $ >= 0")
     7: required i8 needWebsocket (api.body="need_websocket" api.vd="$ <= 1 && $ >= 0")
     8: string urlRewrite (api.body="url_rewrite")
@@ -56,6 +56,124 @@ struct ServiceAddHTTPRequest {
 
 struct ServiceUpdateHTTPRequest {
     1: required i32 ID (api.path="id" api.vd="$ > 0")
+    2: required i8 needHTTPS(api.body="need_https" api.vd="$ <= 1 && $ >= 0")
+    3: required i8 needStripUri (api.body="need_strip_uri" api.vd="$ <= 1 && $ >= 0")
+    4: required i8 needWebsocket (api.body="need_websocket" api.vd="$ <= 1 && $ >= 0")
+    5: string urlRewrite (api.body="url_rewrite")
+    6: string headerTransfer (api.body="header_transfer")
+    7: required i8 openAuth (api.body="open_auth" api.vd="$ <= 1 && $ >= 0")
+    8: string blackList (api.body="black_list")
+    9: string whiteList (api.body="white_list")
+    10: i32 clientIPFlowLimit (api.body="client_ip_flow_limit")
+    11: i32 serviceFlowLimit (api.body="service_flow_limit")
+    12: required i8 roundType (api.body="round_type" api.vd="$ <= 2 && $ >= 0")
+    13: required string ipList (api.body="ip_list")
+    14: required string weightList (api.body="weightList")
+    15: i32 upstreamConnectTimeout (api.body="upstream_connect_timeout")
+    16: i32 upstreamHeaderTimeout (api.body="upstream_header_timeout")
+    17: i32 upstreamIdleTimeout (api.body="upstream_idle_timeout")
+    18: i32 upstreamMaxIdle (api.body="upstream_max_idle")
+}
+
+struct ServiceAddGrpcRequest {
+    1: required string serviceName (api.body="service_name" api.vd="6 <= len($) && len($) <= 128")
+    2: required string serviceDesc (api.body="service_desc" api.vd="len($) < 255 && len($) > 0")
+    3: required i32 port (api.body="port" api.vd = "$ > 8000 && $ < 65535")
+    4: string headerTransfer (api.body="header_transfer")
+    5: required i8 openAuth (api.body="open_auth")
+    6: string blackList (api.body="black_list")
+    7: string whiteList (api.body="white_list")
+    8: string whiteHostName (api.body="white_host_name")
+    9: i32 clientIPFlowLimit (api.body="client_ip_flow_limit")
+    10: i32 serviceFlowLimit (api.body="service_flow_limit")
+    11: required i8 roundType (api.body="round_type" api.vd="$ <= 2 && $ >= 0")
+    12: required string ipList (api.body="ip_list")
+    13: required string weightList (api.body="weightList")
+    14: string forbidList (api.body="forbid_list")
+}
+
+// the interfaces below all belong to serviceDetail
+// DO NOT get mistaken
+
+struct ServiceInfoPart {
+    1: i32 ID
+    2: i8 LoadType
+    3: string ServiceName
+    4: string ServiceDesc
+}
+
+struct ServiceHttpRulePart {
+    1: i32 ID
+    2: i32 ServiceID
+    3: i8 RuleType
+    4: string Rule
+    5: i8 NeedHttps
+    6: i8 NeedWebsocket
+    7: i8 NeedStripUri
+    8: string UrlRewrite
+    9: string HeaderTransfer
+}
+
+struct ServiceGRPCRulePart {
+    1: i32 ID
+    2: i32 ServiceID
+    3: i32 Port
+    4: string HeaderTrans
+}
+
+struct ServiceTcpRulePart {
+    1: i32 ID
+    2: i32 ServiceID
+    3: i32 Port
+}
+
+struct ServiceLoadBalancePart {
+    1: i32 ID
+    2: i32 ServiceID
+    3: i32 CheckMethod
+    4: i32 CheckTimeout
+    5: i32 CheckInterval
+    6: i8 RoundType
+    7: string IpList
+    8: string WeightList
+    9: string ForbidList
+    10: i32 UpstreamConnectTimeout
+    11: i32 UpstreamHeaderTimeout
+    12: i32 UpstreamIdleTimeout
+    13: i32 UpstreamMaxIdle
+}
+
+struct ServiceAccessControlPart {
+    1: i32 ID
+    2: i32 ServiceID
+    3: i8 OpenAuth
+    4: string BlackList
+    5: string WhiteList
+    6: string WhiteHostName
+    7: i32 ClientIPFlowLimit
+    8: i32 ServiceFlowLimit
+}
+
+struct ServiceDetailResponse {
+    1: optional ServiceInfoPart Info
+    2: optional ServiceHttpRulePart Http
+    3: optional ServiceTcpRulePart Tcp
+    4: optional ServiceGRPCRulePart Grpc
+    5: optional ServiceLoadBalancePart LoadBalance
+    6: optional ServiceAccessControlPart AccessControl
+}
+
+struct ServiceDetailRequest {
+    1: i32 ID (api.path="id" api.vd="$ > 0")
+}
+
+struct ServiceStaticResponse {
+    1: list<i64> today
+    2: list<i64> yesterday
+}
+
+struct ServiceStaticRequest {
+    1: i32 ID (api.path="id" api.vd="$ > 0")
 }
 
 service services {
@@ -63,5 +181,8 @@ service services {
     MessageResponse ServiceDelete(1: ServiceDeleteRequest req) (api.delete="/service/delete/:id")
     MessageResponse ServiceAddHTTP(1: ServiceAddHTTPRequest req) (api.post="/service/add/http")
     MessageResponse ServiceUpdateHTTP(1: ServiceUpdateHTTPRequest req) (api.put="/service/update/:id")
+    ServiceDetailResponse ServiceDetail (1: ServiceDetailRequest req) (api.get="/service/detail/:id")
+    ServiceStaticResponse ServiceStatic (1: ServiceStaticRequest req) (api.get="/service/static/:id")
+    MessageResponse ServiceAddGRPC (1: ServiceAddGrpcRequest req) (api.post="/service/add/grpc")
 }
 

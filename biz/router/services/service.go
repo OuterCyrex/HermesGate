@@ -22,11 +22,24 @@ func Register(r *server.Hertz) {
 		_service.GET("/list", append(_servicelistMw(), services.ServiceList)...)
 		{
 			_add := _service.Group("/add", _addMw()...)
+			_add.POST("/grpc", append(_serviceaddgrpcMw(), services.ServiceAddGRPC)...)
 			_add.POST("/http", append(_serviceaddhttpMw(), services.ServiceAddHTTP)...)
 		}
 		{
 			_delete := _service.Group("/delete", _deleteMw()...)
 			_delete.DELETE("/:id", append(_servicedeleteMw(), services.ServiceDelete)...)
+		}
+		{
+			_detail := _service.Group("/detail", _detailMw()...)
+			_detail.GET("/:id", append(_servicedetailMw(), services.ServiceDetail)...)
+		}
+		{
+			_static := _service.Group("/static", _staticMw()...)
+			_static.GET("/:id", append(_servicestaticMw(), services.ServiceStatic)...)
+		}
+		{
+			_update := _service.Group("/update", _updateMw()...)
+			_update.PUT("/:id", append(_serviceupdatehttpMw(), services.ServiceUpdateHTTP)...)
 		}
 	}
 }

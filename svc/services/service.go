@@ -5,6 +5,7 @@ import (
 	"GoGateway/dao"
 	serviceDAO "GoGateway/dao/services"
 	"GoGateway/pkg/consts/codes"
+	serviceConsts "GoGateway/pkg/consts/service"
 	"GoGateway/pkg/status"
 	"errors"
 	"gorm.io/gorm"
@@ -80,6 +81,7 @@ func (s *ServiceInfoSvcLayer) NewHTTPService(req services.ServiceAddHTTPRequest)
 	serviceInfo := &serviceDAO.ServiceInfo{
 		ServiceName: req.ServiceName,
 		ServiceDesc: req.ServiceDesc,
+		LoadType:    serviceConsts.ServiceLoadTypeHTTP,
 	}
 
 	result := tx.Create(&serviceInfo)
@@ -93,7 +95,7 @@ func (s *ServiceInfoSvcLayer) NewHTTPService(req services.ServiceAddHTTPRequest)
 		ServiceID:      serviceInfo.ID,
 		RuleType:       int(req.RuleType),
 		Rule:           req.Rule,
-		NeedHttps:      int(req.NeedHTTP),
+		NeedHttps:      int(req.NeedHTTPS),
 		NeedWebsocket:  int(req.NeedWebsocket),
 		NeedStripUri:   int(req.NeedStripUri),
 		UrlRewrite:     req.UrlRewrite,
@@ -133,5 +135,126 @@ func (s *ServiceInfoSvcLayer) NewHTTPService(req services.ServiceAddHTTPRequest)
 
 	tx.Commit()
 
+	return nil
+}
+
+func (s *ServiceInfoSvcLayer) NewGRPCService(req services.ServiceAddGrpcRequest) error {
+	tx := dao.DB.Begin()
+
+	serviceInfo := &serviceDAO.ServiceInfo{
+		ServiceName: req.ServiceName,
+		ServiceDesc: req.ServiceDesc,
+		LoadType:    serviceConsts.ServiceLoadTypeGRPC,
+	}
+
+	result := tx.Create(&serviceInfo)
+	if result.Error != nil {
+		tx.Rollback()
+		return status.Errorf(codes.InternalError, result.Error.Error())
+	}
+
+	httpRepository := &serviceDAO.ServiceGRPCRuleRepository{}
+	if err := httpRepository.Save(&serviceDAO.ServiceGRPCRule{
+		ServiceID:      serviceInfo.ID,
+		Port:           int(req.Port),
+		HeaderTransfer: req.HeaderTransfer,
+	}); err != nil {
+		tx.Rollback()
+		return status.Errorf(codes.InternalError, err.Error())
+	}
+
+	accessRepository := &serviceDAO.ServiceAccessControlRepository{}
+	if err := accessRepository.Save(&serviceDAO.ServiceAccessControl{
+		ServiceID:         serviceInfo.ID,
+		OpenAuth:          int(req.OpenAuth),
+		BlackList:         req.BlackList,
+		WhiteList:         req.WhiteList,
+		ClientIPFlowLimit: int(req.ClientIPFlowLimit),
+		ServiceFlowLimit:  int(req.ServiceFlowLimit),
+	}); err != nil {
+		tx.Rollback()
+		return status.Errorf(codes.InternalError, err.Error())
+	}
+
+	loadBalanceRepository := &serviceDAO.ServiceLoadBalanceRepository{}
+	if err := loadBalanceRepository.Save(&serviceDAO.ServiceLoadBalance{
+		ServiceID:  serviceInfo.ID,
+		RoundType:  int(req.RoundType),
+		IpList:     req.IpList,
+		WeightList: req.WeightList,
+		ForbidList: req.ForbidList,
+	}); err != nil {
+		tx.Rollback()
+		return status.Errorf(codes.InternalError, err.Error())
+	}
+
+	tx.Commit()
+
+	return nil
+}
+
+func (s *ServiceInfoSvcLayer) UpdateHTTPService(req services.ServiceUpdateHTTPRequest) error {
+	tx := dao.DB.Begin()
+	serviceDetail, err := s.ServiceDetail(&serviceDAO.ServiceInfo{Model: gorm.Model{ID: uint(req.ID)}})
+	if err != nil {
+		tx.Rollback()
+		return status.Errorf(codes.InternalError, err.Error())
+	}
+
+	// httpRule
+	if err := tx.Save(&serviceDAO.ServiceHttpRule{
+		ID:             serviceDetail.Http.ID,
+		ServiceID:      serviceDetail.Http.ServiceID,
+		RuleType:       serviceDetail.Http.RuleType,
+		Rule:           serviceDetail.Http.Rule,
+		NeedHttps:      int(req.NeedHTTPS),
+		NeedWebsocket:  int(req.NeedWebsocket),
+		NeedStripUri:   int(req.NeedStripUri),
+		UrlRewrite:     req.UrlRewrite,
+		HeaderTransfer: req.HeaderTransfer,
+	}).Error; err != nil {
+		tx.Rollback()
+		return status.Errorf(codes.InternalError, err.Error())
+	}
+
+	// access control
+	if err := tx.Save(&serviceDAO.ServiceAccessControl{
+		ID:                serviceDetail.AccessControl.ID,
+		ServiceID:         serviceDetail.AccessControl.ServiceID,
+		OpenAuth:          int(req.OpenAuth),
+		BlackList:         req.BlackList,
+		WhiteList:         req.WhiteList,
+		WhiteHostName:     serviceDetail.AccessControl.WhiteHostName,
+		ClientIPFlowLimit: int(req.ClientIPFlowLimit),
+		ServiceFlowLimit:  int(req.ServiceFlowLimit),
+	}).Error; err != nil {
+		tx.Rollback()
+		return status.Errorf(codes.InternalError, err.Error())
+	}
+
+	// load balance
+	if err := tx.Save(&serviceDAO.ServiceLoadBalance{
+		ID:                     serviceDetail.LoadBalance.ID,
+		ServiceID:              serviceDetail.LoadBalance.ServiceID,
+		CheckMethod:            serviceDetail.LoadBalance.CheckMethod,
+		CheckTimeout:           serviceDetail.LoadBalance.CheckTimeout,
+		CheckInterval:          serviceDetail.LoadBalance.CheckInterval,
+		RoundType:              int(req.RoundType),
+		IpList:                 req.IpList,
+		WeightList:             req.WeightList,
+		ForbidList:             serviceDetail.LoadBalance.ForbidList,
+		UpstreamConnectTimeout: int(req.UpstreamConnectTimeout),
+		UpstreamHeaderTimeout:  int(req.UpstreamHeaderTimeout),
+		UpstreamIdleTimeout:    int(req.UpstreamIdleTimeout),
+		UpstreamMaxIdle:        int(req.UpstreamMaxIdle),
+	}).Error; err != nil {
+		tx.Rollback()
+		return status.Errorf(codes.InternalError, err.Error())
+	}
+
+	if err := tx.Commit().Error; err != nil {
+		tx.Rollback()
+		return status.Errorf(codes.InternalError, err.Error())
+	}
 	return nil
 }

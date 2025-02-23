@@ -40,3 +40,38 @@ func _deleteMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _updateMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _serviceupdatehttpMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _detailMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _servicedetailMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _staticMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _servicestaticMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _serviceaddgrpcMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

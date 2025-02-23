@@ -3,10 +3,10 @@ package serviceDAO
 import "GoGateway/dao"
 
 type ServiceGRPCRule struct {
-	ID          uint   `json:"id" gorm:"primary_key"`
-	ServiceID   uint   `json:"serviceId"`
-	Port        int    `json:"port"`
-	HeaderTrans string `json:"header_trans"`
+	ID             uint   `json:"id" gorm:"primary_key"`
+	ServiceID      uint   `json:"serviceId"`
+	Port           int    `json:"port"`
+	HeaderTransfer string `json:"header_transfer"`
 }
 
 func (sgr *ServiceGRPCRule) TableName() string {

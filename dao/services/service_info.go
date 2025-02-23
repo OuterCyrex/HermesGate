@@ -20,7 +20,7 @@ func (s *ServiceInfo) TableName() string {
 	return "go_gateway_service_info"
 }
 
-func (s *ServiceInfo) ToHttpResponse(addr string, nodes int) *services.ServiceInfoResponse {
+func (s *ServiceInfo) ToHttpResponse(addr string, nodes int) *services.ServiceListItemResponse {
 	loadType := "http"
 
 	switch s.LoadType {
@@ -32,7 +32,7 @@ func (s *ServiceInfo) ToHttpResponse(addr string, nodes int) *services.ServiceIn
 		loadType = "grpc"
 	}
 
-	return &services.ServiceInfoResponse{
+	return &services.ServiceListItemResponse{
 		Id:          int32(s.ID),
 		ServiceName: s.ServiceName,
 		ServiceDesc: s.ServiceDesc,
