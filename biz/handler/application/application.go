@@ -10,6 +10,7 @@ import (
 	"errors"
 	"gorm.io/gorm"
 	"net/http"
+	"time"
 
 	application "GoGateway/biz/model/application"
 	"github.com/cloudwego/hertz/pkg/app"
@@ -62,4 +63,101 @@ func ApplicationDetail(ctx context.Context, c *app.RequestContext) {
 	}
 
 	c.JSON(consts.StatusOK, resp.ToHttpResponse())
+}
+
+// AppUpdate .
+// @router /application/update/:id [PUT]
+func AppUpdate(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req application.AppUpdateRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, status.NewErrorResponse(err.Error()))
+		return
+	}
+
+	svc := applicationSVC.ApplicationSvcLayer{}
+	if err := svc.UpdateApp(req); err != nil {
+		status.ErrToHttpResponse(c, err)
+		return
+	}
+
+	resp := new(application.MessageResponse)
+
+	resp.Message = "应用更新成功"
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// AppDelete .
+// @router /application/delete/:id [DELETE]
+func AppDelete(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req application.AppDeleteRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, status.NewErrorResponse(err.Error()))
+		return
+	}
+
+	svc := applicationSVC.ApplicationSvcLayer{}
+	if err := svc.DeleteApp(req); err != nil {
+		status.ErrToHttpResponse(c, err)
+		return
+	}
+
+	resp := new(application.MessageResponse)
+
+	resp.Message = "应用删除成功"
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// AppList .
+// @router /application/list [GET]
+func AppList(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req application.AppListRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, status.NewErrorResponse(err.Error()))
+		return
+	}
+
+	svc := applicationSVC.ApplicationSvcLayer{}
+	respList, err := svc.AppList(req)
+	if err != nil {
+		status.ErrToHttpResponse(c, err)
+		return
+	}
+
+	c.JSON(consts.StatusOK, respList)
+}
+
+// AppStatic .
+// @router /application/static/:id [GET]
+func AppStatic(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req application.AppStaticRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, status.NewErrorResponse(err.Error()))
+		return
+	}
+
+	var today []int64
+	var yesterday []int64
+
+	for i := 0; i <= time.Now().Hour(); i++ {
+		today = append(today, 0)
+	}
+
+	for i := 0; i <= 23; i++ {
+		yesterday = append(yesterday, 0)
+	}
+
+	c.JSON(consts.StatusOK, application.AppStaticResponse{
+		Today:     today,
+		Yesterday: yesterday,
+	})
 }

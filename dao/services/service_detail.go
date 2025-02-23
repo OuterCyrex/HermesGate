@@ -12,6 +12,7 @@ type ServiceDetail struct {
 }
 
 func (sd *ServiceDetail) ToHttpResponse() *services.ServiceDetailResponse {
+
 	detail := &services.ServiceDetailResponse{
 		Info:          nil,
 		Http:          nil,

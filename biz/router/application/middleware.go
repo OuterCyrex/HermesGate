@@ -35,3 +35,38 @@ func _applicationdetailMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _updateMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _appupdateMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _deleteMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _appdeleteMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _applistMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _staticMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _appstaticMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

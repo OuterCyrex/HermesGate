@@ -9,9 +9,9 @@ import (
 type Application struct {
 	gorm.Model
 
-	AppID    string `json:"app_id" gorm:"type:varchar(128);unique;not null"`
+	AppID    string `json:"app_id" gorm:"type:varchar(128);not null"`
 	Name     string `json:"name" gorm:"type:varchar(255);not null"`
-	Secret   string `json:"secret" gorm:"varchar(128);unique;not null"`
+	Secret   string `json:"secret" gorm:"varchar(128);not null"`
 	WhiteIPS string `json:"white_ips" gorm:"varchar(800)"`
 	Qpd      int64  `json:"qpd" gorm:"type:int"`
 	Qps      int64  `json:"qps" gorm:"type:int"`
@@ -22,6 +22,9 @@ func (a *Application) TableName() string {
 }
 
 func (a *Application) ToHttpResponse() application.AppDetailResponse {
+	if a == nil {
+		return application.AppDetailResponse{}
+	}
 	return application.AppDetailResponse{
 		ID:       int32(a.ID),
 		AppID:    a.AppID,
@@ -42,4 +45,8 @@ func (a *ApplicationRepository) Find(dt *Application) (*Application, error) {
 		return nil, err
 	}
 	return result, nil
+}
+
+func (a *ApplicationRepository) Save(dt *Application) error {
+	return dao.DB.Save(dt).Error
 }

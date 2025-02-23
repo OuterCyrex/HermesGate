@@ -19,13 +19,26 @@ func Register(r *server.Hertz) {
 	root := r.Group("/", rootMw()...)
 	{
 		_application := root.Group("/application", _applicationMw()...)
+		_application.GET("/list", append(_applistMw(), application.AppList)...)
 		{
 			_add := _application.Group("/add", _addMw()...)
 			_add.POST("/http", append(_applicationaddhttpMw(), application.ApplicationAddHTTP)...)
 		}
 		{
+			_delete := _application.Group("/delete", _deleteMw()...)
+			_delete.DELETE("/:id", append(_appdeleteMw(), application.AppDelete)...)
+		}
+		{
 			_detail := _application.Group("/detail", _detailMw()...)
 			_detail.GET("/:id", append(_applicationdetailMw(), application.ApplicationDetail)...)
+		}
+		{
+			_static := _application.Group("/static", _staticMw()...)
+			_static.GET("/:id", append(_appstaticMw(), application.AppStatic)...)
+		}
+		{
+			_update := _application.Group("/update", _updateMw()...)
+			_update.PUT("/:id", append(_appupdateMw(), application.AppUpdate)...)
 		}
 	}
 }
