@@ -58,9 +58,8 @@ func AdminLogin(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp := admin.AdminLoginResponse{
-		Token: user.Username,
-		Code:  http.StatusOK,
-		Msg:   "登陆成功",
+		Token:   user.Username,
+		Message: "登陆成功",
 	}
 
 	c.JSON(http.StatusOK, resp)

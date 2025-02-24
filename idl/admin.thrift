@@ -7,8 +7,7 @@ struct AdminLoginRequest {
 
 struct AdminLoginResponse {
     1: string token
-    2: i32 code
-    3: string msg
+    2: string message
 }
 
 struct AdminInfoResponse {
@@ -28,7 +27,7 @@ struct ChangePasswordRequest {
     1: string password (api.body="password", api.vd="len($) >= 6 && len($) <= 16")
 }
 
-service AdminService {
+service Admin {
     AdminLoginResponse AdminLogin(1: AdminLoginRequest req) (api.post="/admin/login")
     AdminInfoResponse AdminInfo() (api.get="/admin/info")
     MessageResponse AdminLogout() (api.get="/admin/logout")
