@@ -138,7 +138,7 @@ func AppList(ctx context.Context, c *app.RequestContext) {
 // @router /application/static/:id [GET]
 func AppStatic(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req application.AppStaticRequest
+	var req application.AppStatRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, status.NewErrorResponse(err.Error()))
@@ -156,7 +156,7 @@ func AppStatic(ctx context.Context, c *app.RequestContext) {
 		yesterday = append(yesterday, 0)
 	}
 
-	c.JSON(consts.StatusOK, application.AppStaticResponse{
+	c.JSON(consts.StatusOK, application.AppStatResponse{
 		Today:     today,
 		Yesterday: yesterday,
 	})

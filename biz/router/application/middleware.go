@@ -70,3 +70,8 @@ func _appstaticMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _statMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

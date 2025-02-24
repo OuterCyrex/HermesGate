@@ -20,5 +20,10 @@ func Register(r *server.Hertz) {
 	{
 		_dashboard := root.Group("/dashboard", _dashboardMw()...)
 		_dashboard.GET("/panel", append(_getpaneldataMw(), dashboard.GetPanelData)...)
+		{
+			_stat := _dashboard.Group("/stat", _statMw()...)
+			_stat.GET("/flow", append(_getflowstatisticsMw(), dashboard.GetFlowStatistics)...)
+			_stat.GET("/service", append(_getdashservicestatMw(), dashboard.GetDashServiceStat)...)
+		}
 	}
 }

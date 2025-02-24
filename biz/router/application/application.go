@@ -33,8 +33,8 @@ func Register(r *server.Hertz) {
 			_detail.GET("/:id", append(_applicationdetailMw(), application.ApplicationDetail)...)
 		}
 		{
-			_static := _application.Group("/static", _staticMw()...)
-			_static.GET("/:id", append(_appstaticMw(), application.AppStatic)...)
+			_stat := _application.Group("/stat", _statMw()...)
+			_stat.GET("/:id", append(_appstaticMw(), application.AppStatic)...)
 		}
 		{
 			_update := _application.Group("/update", _updateMw()...)

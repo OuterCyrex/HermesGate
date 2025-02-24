@@ -63,11 +63,11 @@ struct AppDeleteRequest {
     1: i32 ID (api.path="id" api.vd="$ > 0")
 }
 
-struct AppStaticRequest {
+struct AppStatRequest {
     1: i32 ID (api.path="id")
 }
 
-struct AppStaticResponse {
+struct AppStatResponse {
     1: list<i64> yesterday
     2: list<i64> today
 }
@@ -78,5 +78,5 @@ service application {
     MessageResponse AppUpdate (1: AppUpdateRequest req) (api.put="/application/update/:id")
     MessageResponse AppDelete (1: AppDeleteRequest req) (api.delete="/application/delete/:id")
     AppListResponse AppList (1: AppListRequest req) (api.get="/application/list")
-    AppStaticResponse AppStatic (1: AppStaticRequest req) (api.get="/application/static/:id")
+    AppStatResponse AppStatic (1: AppStatRequest req) (api.get="/application/stat/:id")
 }

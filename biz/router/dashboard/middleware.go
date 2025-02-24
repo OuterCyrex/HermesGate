@@ -20,3 +20,18 @@ func _getpaneldataMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _getflowstatisticsMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _statMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _getdashservicestatMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

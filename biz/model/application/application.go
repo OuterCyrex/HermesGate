@@ -2547,26 +2547,26 @@ func (p *AppDeleteRequest) String() string {
 
 }
 
-type AppStaticRequest struct {
+type AppStatRequest struct {
 	ID int32 `thrift:"ID,1" json:"ID" path:"id"`
 }
 
-func NewAppStaticRequest() *AppStaticRequest {
-	return &AppStaticRequest{}
+func NewAppStatRequest() *AppStatRequest {
+	return &AppStatRequest{}
 }
 
-func (p *AppStaticRequest) InitDefault() {
+func (p *AppStatRequest) InitDefault() {
 }
 
-func (p *AppStaticRequest) GetID() (v int32) {
+func (p *AppStatRequest) GetID() (v int32) {
 	return p.ID
 }
 
-var fieldIDToName_AppStaticRequest = map[int16]string{
+var fieldIDToName_AppStatRequest = map[int16]string{
 	1: "ID",
 }
 
-func (p *AppStaticRequest) Read(iprot thrift.TProtocol) (err error) {
+func (p *AppStatRequest) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 
@@ -2611,7 +2611,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_AppStaticRequest[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_AppStatRequest[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -2621,7 +2621,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *AppStaticRequest) ReadField1(iprot thrift.TProtocol) error {
+func (p *AppStatRequest) ReadField1(iprot thrift.TProtocol) error {
 
 	var _field int32
 	if v, err := iprot.ReadI32(); err != nil {
@@ -2633,9 +2633,9 @@ func (p *AppStaticRequest) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *AppStaticRequest) Write(oprot thrift.TProtocol) (err error) {
+func (p *AppStatRequest) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("AppStaticRequest"); err != nil {
+	if err = oprot.WriteStructBegin("AppStatRequest"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -2661,7 +2661,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *AppStaticRequest) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *AppStatRequest) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("ID", thrift.I32, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -2678,40 +2678,40 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *AppStaticRequest) String() string {
+func (p *AppStatRequest) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("AppStaticRequest(%+v)", *p)
+	return fmt.Sprintf("AppStatRequest(%+v)", *p)
 
 }
 
-type AppStaticResponse struct {
+type AppStatResponse struct {
 	Yesterday []int64 `thrift:"yesterday,1" form:"yesterday" json:"yesterday" query:"yesterday"`
 	Today     []int64 `thrift:"today,2" form:"today" json:"today" query:"today"`
 }
 
-func NewAppStaticResponse() *AppStaticResponse {
-	return &AppStaticResponse{}
+func NewAppStatResponse() *AppStatResponse {
+	return &AppStatResponse{}
 }
 
-func (p *AppStaticResponse) InitDefault() {
+func (p *AppStatResponse) InitDefault() {
 }
 
-func (p *AppStaticResponse) GetYesterday() (v []int64) {
+func (p *AppStatResponse) GetYesterday() (v []int64) {
 	return p.Yesterday
 }
 
-func (p *AppStaticResponse) GetToday() (v []int64) {
+func (p *AppStatResponse) GetToday() (v []int64) {
 	return p.Today
 }
 
-var fieldIDToName_AppStaticResponse = map[int16]string{
+var fieldIDToName_AppStatResponse = map[int16]string{
 	1: "yesterday",
 	2: "today",
 }
 
-func (p *AppStaticResponse) Read(iprot thrift.TProtocol) (err error) {
+func (p *AppStatResponse) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 
@@ -2764,7 +2764,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_AppStaticResponse[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_AppStatResponse[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -2774,7 +2774,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *AppStaticResponse) ReadField1(iprot thrift.TProtocol) error {
+func (p *AppStatResponse) ReadField1(iprot thrift.TProtocol) error {
 	_, size, err := iprot.ReadListBegin()
 	if err != nil {
 		return err
@@ -2797,7 +2797,7 @@ func (p *AppStaticResponse) ReadField1(iprot thrift.TProtocol) error {
 	p.Yesterday = _field
 	return nil
 }
-func (p *AppStaticResponse) ReadField2(iprot thrift.TProtocol) error {
+func (p *AppStatResponse) ReadField2(iprot thrift.TProtocol) error {
 	_, size, err := iprot.ReadListBegin()
 	if err != nil {
 		return err
@@ -2821,9 +2821,9 @@ func (p *AppStaticResponse) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *AppStaticResponse) Write(oprot thrift.TProtocol) (err error) {
+func (p *AppStatResponse) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("AppStaticResponse"); err != nil {
+	if err = oprot.WriteStructBegin("AppStatResponse"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -2853,7 +2853,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *AppStaticResponse) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *AppStatResponse) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("yesterday", thrift.LIST, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -2877,7 +2877,7 @@ WriteFieldBeginError:
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
-func (p *AppStaticResponse) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *AppStatResponse) writeField2(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("today", thrift.LIST, 2); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -2902,11 +2902,11 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
-func (p *AppStaticResponse) String() string {
+func (p *AppStatResponse) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("AppStaticResponse(%+v)", *p)
+	return fmt.Sprintf("AppStatResponse(%+v)", *p)
 
 }
 
@@ -2921,7 +2921,7 @@ type Application interface {
 
 	AppList(ctx context.Context, req *AppListRequest) (r *AppListResponse, err error)
 
-	AppStatic(ctx context.Context, req *AppStaticRequest) (r *AppStaticResponse, err error)
+	AppStatic(ctx context.Context, req *AppStatRequest) (r *AppStatResponse, err error)
 }
 
 type ApplicationClient struct {
@@ -2995,7 +2995,7 @@ func (p *ApplicationClient) AppList(ctx context.Context, req *AppListRequest) (r
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *ApplicationClient) AppStatic(ctx context.Context, req *AppStaticRequest) (r *AppStaticResponse, err error) {
+func (p *ApplicationClient) AppStatic(ctx context.Context, req *AppStatRequest) (r *AppStatResponse, err error) {
 	var _args ApplicationAppStaticArgs
 	_args.Req = req
 	var _result ApplicationAppStaticResult
@@ -3310,7 +3310,7 @@ func (p *applicationProcessorAppStatic) Process(ctx context.Context, seqId int32
 	iprot.ReadMessageEnd()
 	var err2 error
 	result := ApplicationAppStaticResult{}
-	var retval *AppStaticResponse
+	var retval *AppStatResponse
 	if retval, err2 = p.handler.AppStatic(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing AppStatic: "+err2.Error())
 		oprot.WriteMessageBegin("AppStatic", thrift.EXCEPTION, seqId)
@@ -4800,7 +4800,7 @@ func (p *ApplicationAppListResult) String() string {
 }
 
 type ApplicationAppStaticArgs struct {
-	Req *AppStaticRequest `thrift:"req,1"`
+	Req *AppStatRequest `thrift:"req,1"`
 }
 
 func NewApplicationAppStaticArgs() *ApplicationAppStaticArgs {
@@ -4810,9 +4810,9 @@ func NewApplicationAppStaticArgs() *ApplicationAppStaticArgs {
 func (p *ApplicationAppStaticArgs) InitDefault() {
 }
 
-var ApplicationAppStaticArgs_Req_DEFAULT *AppStaticRequest
+var ApplicationAppStaticArgs_Req_DEFAULT *AppStatRequest
 
-func (p *ApplicationAppStaticArgs) GetReq() (v *AppStaticRequest) {
+func (p *ApplicationAppStaticArgs) GetReq() (v *AppStatRequest) {
 	if !p.IsSetReq() {
 		return ApplicationAppStaticArgs_Req_DEFAULT
 	}
@@ -4883,7 +4883,7 @@ ReadStructEndError:
 }
 
 func (p *ApplicationAppStaticArgs) ReadField1(iprot thrift.TProtocol) error {
-	_field := NewAppStaticRequest()
+	_field := NewAppStatRequest()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -4945,7 +4945,7 @@ func (p *ApplicationAppStaticArgs) String() string {
 }
 
 type ApplicationAppStaticResult struct {
-	Success *AppStaticResponse `thrift:"success,0,optional"`
+	Success *AppStatResponse `thrift:"success,0,optional"`
 }
 
 func NewApplicationAppStaticResult() *ApplicationAppStaticResult {
@@ -4955,9 +4955,9 @@ func NewApplicationAppStaticResult() *ApplicationAppStaticResult {
 func (p *ApplicationAppStaticResult) InitDefault() {
 }
 
-var ApplicationAppStaticResult_Success_DEFAULT *AppStaticResponse
+var ApplicationAppStaticResult_Success_DEFAULT *AppStatResponse
 
-func (p *ApplicationAppStaticResult) GetSuccess() (v *AppStaticResponse) {
+func (p *ApplicationAppStaticResult) GetSuccess() (v *AppStatResponse) {
 	if !p.IsSetSuccess() {
 		return ApplicationAppStaticResult_Success_DEFAULT
 	}
@@ -5028,7 +5028,7 @@ ReadStructEndError:
 }
 
 func (p *ApplicationAppStaticResult) ReadField0(iprot thrift.TProtocol) error {
-	_field := NewAppStaticResponse()
+	_field := NewAppStatResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}

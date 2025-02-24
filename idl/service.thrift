@@ -212,7 +212,7 @@ struct ServiceDetailRequest {
     1: i32 ID (api.path="id" api.vd="$ > 0")
 }
 
-struct ServiceStaticResponse {
+struct ServiceStatResponse {
     1: list<i64> today
     2: list<i64> yesterday
 }
@@ -227,7 +227,7 @@ service services {
     MessageResponse ServiceAddHTTP(1: ServiceAddHTTPRequest req) (api.post="/service/add/http")
     MessageResponse ServiceUpdateHTTP(1: ServiceUpdateHTTPRequest req) (api.put="/service/update/http/:id")
     ServiceDetailResponse ServiceDetail (1: ServiceDetailRequest req) (api.get="/service/detail/:id")
-    ServiceStaticResponse ServiceStatic (1: ServiceStaticRequest req) (api.get="/service/static/:id")
+    ServiceStatResponse ServiceStatic (1: ServiceStaticRequest req) (api.get="/service/stat/:id")
     MessageResponse ServiceAddGRPC (1: ServiceAddGrpcRequest req) (api.post="/service/add/grpc")
     MessageResponse ServiceAddTCP (1: ServiceAddTcpRequest req) (api.post="/service/add/tcp")
     MessageResponse ServiceUpdateGRPC (1: ServiceUpdateGrpcRequest req) (api.put="/service/update/grpc/:id")

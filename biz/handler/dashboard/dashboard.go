@@ -3,7 +3,13 @@
 package dashboard
 
 import (
+	"GoGateway/dao"
+	applicationDAO "GoGateway/dao/application"
+	serviceDAO "GoGateway/dao/services"
+	"GoGateway/pkg/status"
+	dashboardSVC "GoGateway/svc/dashboard"
 	"context"
+	"time"
 
 	dashboard "GoGateway/biz/model/dashboard"
 	"github.com/cloudwego/hertz/pkg/app"
@@ -13,7 +19,53 @@ import (
 // GetPanelData .
 // @router /dashboard/panel [GET]
 func GetPanelData(ctx context.Context, c *app.RequestContext) {
-	resp := new(dashboard.PanelDataResponse)
+
+	var serviceNum int64
+	var appNum int64
+
+	dao.DB.Model(&serviceDAO.ServiceInfo{}).Count(&serviceNum)
+	dao.DB.Model(&applicationDAO.Application{}).Count(&appNum)
+
+	c.JSON(consts.StatusOK, dashboard.PanelDataResponse{
+		ServiceNum:      serviceNum,
+		AppNum:          appNum,
+		CurrentQps:      0,
+		TodayRequestNum: 0,
+	})
+}
+
+// GetFlowStatistics .
+// @router /dashboard/stat [GET]
+func GetFlowStatistics(ctx context.Context, c *app.RequestContext) {
+	var today []int64
+	var yesterday []int64
+
+	for i := 0; i <= time.Now().Hour(); i++ {
+		today = append(today, 0)
+	}
+
+	for i := 0; i <= 23; i++ {
+		yesterday = append(yesterday, 0)
+	}
+
+	resp := dashboard.FlowStatResponse{
+		Today:     today,
+		Yesterday: yesterday,
+	}
+
+	c.JSON(consts.StatusOK, resp)
+}
+
+// GetDashServiceStat .
+// @router /dashboard/stat/service [GET]
+func GetDashServiceStat(ctx context.Context, c *app.RequestContext) {
+
+	svc := dashboardSVC.DashboardSvcLayer{}
+	resp, err := svc.GetServiceStat()
+	if err != nil {
+		status.ErrToHttpResponse(c, err)
+		return
+	}
 
 	c.JSON(consts.StatusOK, resp)
 }

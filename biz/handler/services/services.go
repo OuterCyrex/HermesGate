@@ -242,7 +242,7 @@ func ServiceStatic(ctx context.Context, c *app.RequestContext) {
 		yesterday = append(yesterday, 0)
 	}
 
-	c.JSON(consts.StatusOK, services.ServiceStaticResponse{
+	c.JSON(consts.StatusOK, services.ServiceStatResponse{
 		Today:     today,
 		Yesterday: yesterday,
 	})

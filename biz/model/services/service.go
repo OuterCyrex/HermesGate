@@ -9034,32 +9034,32 @@ func (p *ServiceDetailRequest) String() string {
 
 }
 
-type ServiceStaticResponse struct {
+type ServiceStatResponse struct {
 	Today     []int64 `thrift:"today,1" form:"today" json:"today" query:"today"`
 	Yesterday []int64 `thrift:"yesterday,2" form:"yesterday" json:"yesterday" query:"yesterday"`
 }
 
-func NewServiceStaticResponse() *ServiceStaticResponse {
-	return &ServiceStaticResponse{}
+func NewServiceStatResponse() *ServiceStatResponse {
+	return &ServiceStatResponse{}
 }
 
-func (p *ServiceStaticResponse) InitDefault() {
+func (p *ServiceStatResponse) InitDefault() {
 }
 
-func (p *ServiceStaticResponse) GetToday() (v []int64) {
+func (p *ServiceStatResponse) GetToday() (v []int64) {
 	return p.Today
 }
 
-func (p *ServiceStaticResponse) GetYesterday() (v []int64) {
+func (p *ServiceStatResponse) GetYesterday() (v []int64) {
 	return p.Yesterday
 }
 
-var fieldIDToName_ServiceStaticResponse = map[int16]string{
+var fieldIDToName_ServiceStatResponse = map[int16]string{
 	1: "today",
 	2: "yesterday",
 }
 
-func (p *ServiceStaticResponse) Read(iprot thrift.TProtocol) (err error) {
+func (p *ServiceStatResponse) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 
@@ -9112,7 +9112,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ServiceStaticResponse[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ServiceStatResponse[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -9122,7 +9122,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *ServiceStaticResponse) ReadField1(iprot thrift.TProtocol) error {
+func (p *ServiceStatResponse) ReadField1(iprot thrift.TProtocol) error {
 	_, size, err := iprot.ReadListBegin()
 	if err != nil {
 		return err
@@ -9145,7 +9145,7 @@ func (p *ServiceStaticResponse) ReadField1(iprot thrift.TProtocol) error {
 	p.Today = _field
 	return nil
 }
-func (p *ServiceStaticResponse) ReadField2(iprot thrift.TProtocol) error {
+func (p *ServiceStatResponse) ReadField2(iprot thrift.TProtocol) error {
 	_, size, err := iprot.ReadListBegin()
 	if err != nil {
 		return err
@@ -9169,9 +9169,9 @@ func (p *ServiceStaticResponse) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ServiceStaticResponse) Write(oprot thrift.TProtocol) (err error) {
+func (p *ServiceStatResponse) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("ServiceStaticResponse"); err != nil {
+	if err = oprot.WriteStructBegin("ServiceStatResponse"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -9201,7 +9201,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *ServiceStaticResponse) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *ServiceStatResponse) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("today", thrift.LIST, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -9225,7 +9225,7 @@ WriteFieldBeginError:
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
-func (p *ServiceStaticResponse) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *ServiceStatResponse) writeField2(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("yesterday", thrift.LIST, 2); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -9250,11 +9250,11 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
-func (p *ServiceStaticResponse) String() string {
+func (p *ServiceStatResponse) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("ServiceStaticResponse(%+v)", *p)
+	return fmt.Sprintf("ServiceStatResponse(%+v)", *p)
 
 }
 
@@ -9408,7 +9408,7 @@ type Services interface {
 
 	ServiceDetail(ctx context.Context, req *ServiceDetailRequest) (r *ServiceDetailResponse, err error)
 
-	ServiceStatic(ctx context.Context, req *ServiceStaticRequest) (r *ServiceStaticResponse, err error)
+	ServiceStatic(ctx context.Context, req *ServiceStaticRequest) (r *ServiceStatResponse, err error)
 
 	ServiceAddGRPC(ctx context.Context, req *ServiceAddGrpcRequest) (r *MessageResponse, err error)
 
@@ -9490,7 +9490,7 @@ func (p *ServicesClient) ServiceDetail(ctx context.Context, req *ServiceDetailRe
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *ServicesClient) ServiceStatic(ctx context.Context, req *ServiceStaticRequest) (r *ServiceStaticResponse, err error) {
+func (p *ServicesClient) ServiceStatic(ctx context.Context, req *ServiceStaticRequest) (r *ServiceStatResponse, err error) {
 	var _args ServicesServiceStaticArgs
 	_args.Req = req
 	var _result ServicesServiceStaticResult
@@ -9845,7 +9845,7 @@ func (p *servicesProcessorServiceStatic) Process(ctx context.Context, seqId int3
 	iprot.ReadMessageEnd()
 	var err2 error
 	result := ServicesServiceStaticResult{}
-	var retval *ServiceStaticResponse
+	var retval *ServiceStatResponse
 	if retval, err2 = p.handler.ServiceStatic(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ServiceStatic: "+err2.Error())
 		oprot.WriteMessageBegin("ServiceStatic", thrift.EXCEPTION, seqId)
@@ -11672,7 +11672,7 @@ func (p *ServicesServiceStaticArgs) String() string {
 }
 
 type ServicesServiceStaticResult struct {
-	Success *ServiceStaticResponse `thrift:"success,0,optional"`
+	Success *ServiceStatResponse `thrift:"success,0,optional"`
 }
 
 func NewServicesServiceStaticResult() *ServicesServiceStaticResult {
@@ -11682,9 +11682,9 @@ func NewServicesServiceStaticResult() *ServicesServiceStaticResult {
 func (p *ServicesServiceStaticResult) InitDefault() {
 }
 
-var ServicesServiceStaticResult_Success_DEFAULT *ServiceStaticResponse
+var ServicesServiceStaticResult_Success_DEFAULT *ServiceStatResponse
 
-func (p *ServicesServiceStaticResult) GetSuccess() (v *ServiceStaticResponse) {
+func (p *ServicesServiceStaticResult) GetSuccess() (v *ServiceStatResponse) {
 	if !p.IsSetSuccess() {
 		return ServicesServiceStaticResult_Success_DEFAULT
 	}
@@ -11755,7 +11755,7 @@ ReadStructEndError:
 }
 
 func (p *ServicesServiceStaticResult) ReadField0(iprot thrift.TProtocol) error {
-	_field := NewServiceStaticResponse()
+	_field := NewServiceStatResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
