@@ -1209,11 +1209,11 @@ type ServiceAddHTTPRequest struct {
 	OpenAuth               int8   `thrift:"openAuth,10,required" form:"open_auth,required" json:"open_auth,required" vd:"$ <= 1 && $ >= 0"`
 	BlackList              string `thrift:"blackList,11" form:"black_list" json:"black_list"`
 	WhiteList              string `thrift:"whiteList,12" form:"white_list" json:"white_list"`
-	ClientIPFlowLimit      int32  `thrift:"clientIPFlowLimit,13" form:"client_ip_flow_limit" json:"client_ip_flow_limit"`
+	ClientIPFlowLimit      int32  `thrift:"clientIPFlowLimit,13" form:"clientip_flow_limit" json:"clientip_flow_limit"`
 	ServiceFlowLimit       int32  `thrift:"serviceFlowLimit,14" form:"service_flow_limit" json:"service_flow_limit"`
 	RoundType              int8   `thrift:"roundType,15,required" form:"round_type,required" json:"round_type,required" vd:"$ <= 2 && $ >= 0"`
 	IpList                 string `thrift:"ipList,16,required" form:"ip_list,required" json:"ip_list,required"`
-	WeightList             string `thrift:"weightList,17,required" form:"weightList,required" json:"weightList,required"`
+	WeightList             string `thrift:"weightList,17,required" form:"weight_list,required" json:"weight_list,required"`
 	UpstreamConnectTimeout int32  `thrift:"upstreamConnectTimeout,18" form:"upstream_connect_timeout" json:"upstream_connect_timeout"`
 	UpstreamHeaderTimeout  int32  `thrift:"upstreamHeaderTimeout,19" form:"upstream_header_timeout" json:"upstream_header_timeout"`
 	UpstreamIdleTimeout    int32  `thrift:"upstreamIdleTimeout,20" form:"upstream_idle_timeout" json:"upstream_idle_timeout"`
@@ -2323,11 +2323,11 @@ type ServiceUpdateHTTPRequest struct {
 	OpenAuth               int8   `thrift:"openAuth,7,required" form:"open_auth,required" json:"open_auth,required" vd:"$ <= 1 && $ >= 0"`
 	BlackList              string `thrift:"blackList,8" form:"black_list" json:"black_list"`
 	WhiteList              string `thrift:"whiteList,9" form:"white_list" json:"white_list"`
-	ClientIPFlowLimit      int32  `thrift:"clientIPFlowLimit,10" form:"client_ip_flow_limit" json:"client_ip_flow_limit"`
+	ClientIPFlowLimit      int32  `thrift:"clientIPFlowLimit,10" form:"clientip_flow_limit" json:"clientip_flow_limit"`
 	ServiceFlowLimit       int32  `thrift:"serviceFlowLimit,11" form:"service_flow_limit" json:"service_flow_limit"`
 	RoundType              int8   `thrift:"roundType,12,required" form:"round_type,required" json:"round_type,required" vd:"$ <= 2 && $ >= 0"`
 	IpList                 string `thrift:"ipList,13,required" form:"ip_list,required" json:"ip_list,required"`
-	WeightList             string `thrift:"weightList,14,required" form:"weightList,required" json:"weightList,required"`
+	WeightList             string `thrift:"weightList,14,required" form:"weight_list,required" json:"weight_list,required"`
 	UpstreamConnectTimeout int32  `thrift:"upstreamConnectTimeout,15" form:"upstream_connect_timeout" json:"upstream_connect_timeout"`
 	UpstreamHeaderTimeout  int32  `thrift:"upstreamHeaderTimeout,16" form:"upstream_header_timeout" json:"upstream_header_timeout"`
 	UpstreamIdleTimeout    int32  `thrift:"upstreamIdleTimeout,17" form:"upstream_idle_timeout" json:"upstream_idle_timeout"`
@@ -3283,11 +3283,11 @@ type ServiceAddGrpcRequest struct {
 	BlackList         string `thrift:"blackList,6" form:"black_list" json:"black_list"`
 	WhiteList         string `thrift:"whiteList,7" form:"white_list" json:"white_list"`
 	WhiteHostName     string `thrift:"whiteHostName,8" form:"white_host_name" json:"white_host_name"`
-	ClientIPFlowLimit int32  `thrift:"clientIPFlowLimit,9" form:"client_ip_flow_limit" json:"client_ip_flow_limit"`
+	ClientIPFlowLimit int32  `thrift:"clientIPFlowLimit,9" form:"clientip_flow_limit" json:"clientip_flow_limit"`
 	ServiceFlowLimit  int32  `thrift:"serviceFlowLimit,10" form:"service_flow_limit" json:"service_flow_limit"`
 	RoundType         int8   `thrift:"roundType,11,required" form:"round_type,required" json:"round_type,required" vd:"$ <= 2 && $ >= 0"`
 	IpList            string `thrift:"ipList,12,required" form:"ip_list,required" json:"ip_list,required"`
-	WeightList        string `thrift:"weightList,13,required" form:"weightList,required" json:"weightList,required"`
+	WeightList        string `thrift:"weightList,13,required" form:"weight_list,required" json:"weight_list,required"`
 	ForbidList        string `thrift:"forbidList,14" form:"forbid_list" json:"forbid_list"`
 }
 
@@ -4055,11 +4055,11 @@ type ServiceUpdateGrpcRequest struct {
 	BlackList         string `thrift:"blackList,4" form:"black_list" json:"black_list"`
 	WhiteList         string `thrift:"whiteList,5" form:"white_list" json:"white_list"`
 	WhiteHostName     string `thrift:"whiteHostName,6" form:"white_host_name" json:"white_host_name"`
-	ClientIPFlowLimit int32  `thrift:"clientIPFlowLimit,7" form:"client_ip_flow_limit" json:"client_ip_flow_limit"`
+	ClientIPFlowLimit int32  `thrift:"clientIPFlowLimit,7" form:"clientip_flow_limit" json:"clientip_flow_limit"`
 	ServiceFlowLimit  int32  `thrift:"serviceFlowLimit,8" form:"service_flow_limit" json:"service_flow_limit"`
 	RoundType         int8   `thrift:"roundType,9,required" form:"round_type,required" json:"round_type,required" vd:"$ <= 2 && $ >= 0"`
 	IpList            string `thrift:"ipList,10,required" form:"ip_list,required" json:"ip_list,required"`
-	WeightList        string `thrift:"weightList,11,required" form:"weightList,required" json:"weightList,required"`
+	WeightList        string `thrift:"weightList,11,required" form:"weight_list,required" json:"weight_list,required"`
 	ForbidList        string `thrift:"forbidList,12" form:"forbid_list" json:"forbid_list"`
 }
 
@@ -6848,10 +6848,10 @@ func (p *ServiceHttpRulePart) String() string {
 }
 
 type ServiceGRPCRulePart struct {
-	ID          int32  `thrift:"ID,1" form:"ID" json:"ID" query:"ID"`
-	ServiceID   int32  `thrift:"ServiceID,2" form:"ServiceID" json:"ServiceID" query:"ServiceID"`
-	Port        int32  `thrift:"Port,3" form:"Port" json:"Port" query:"Port"`
-	HeaderTrans string `thrift:"HeaderTrans,4" form:"HeaderTrans" json:"HeaderTrans" query:"HeaderTrans"`
+	ID             int32  `thrift:"ID,1" form:"ID" json:"ID" query:"ID"`
+	ServiceID      int32  `thrift:"ServiceID,2" form:"ServiceID" json:"ServiceID" query:"ServiceID"`
+	Port           int32  `thrift:"Port,3" form:"Port" json:"Port" query:"Port"`
+	HeaderTransfer string `thrift:"HeaderTransfer,4" form:"HeaderTransfer" json:"HeaderTransfer" query:"HeaderTransfer"`
 }
 
 func NewServiceGRPCRulePart() *ServiceGRPCRulePart {
@@ -6873,15 +6873,15 @@ func (p *ServiceGRPCRulePart) GetPort() (v int32) {
 	return p.Port
 }
 
-func (p *ServiceGRPCRulePart) GetHeaderTrans() (v string) {
-	return p.HeaderTrans
+func (p *ServiceGRPCRulePart) GetHeaderTransfer() (v string) {
+	return p.HeaderTransfer
 }
 
 var fieldIDToName_ServiceGRPCRulePart = map[int16]string{
 	1: "ID",
 	2: "ServiceID",
 	3: "Port",
-	4: "HeaderTrans",
+	4: "HeaderTransfer",
 }
 
 func (p *ServiceGRPCRulePart) Read(iprot thrift.TProtocol) (err error) {
@@ -7004,7 +7004,7 @@ func (p *ServiceGRPCRulePart) ReadField4(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.HeaderTrans = _field
+	p.HeaderTransfer = _field
 	return nil
 }
 
@@ -7097,10 +7097,10 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
 }
 func (p *ServiceGRPCRulePart) writeField4(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("HeaderTrans", thrift.STRING, 4); err != nil {
+	if err = oprot.WriteFieldBegin("HeaderTransfer", thrift.STRING, 4); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.HeaderTrans); err != nil {
+	if err := oprot.WriteString(p.HeaderTransfer); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -8484,12 +8484,12 @@ func (p *ServiceAccessControlPart) String() string {
 }
 
 type ServiceDetailResponse struct {
-	Info          *ServiceInfoPart          `thrift:"Info,1,optional" form:"Info" json:"Info,omitempty" query:"Info"`
-	Http          *ServiceHttpRulePart      `thrift:"Http,2,optional" form:"Http" json:"Http,omitempty" query:"Http"`
-	Tcp           *ServiceTcpRulePart       `thrift:"Tcp,3,optional" form:"Tcp" json:"Tcp,omitempty" query:"Tcp"`
-	Grpc          *ServiceGRPCRulePart      `thrift:"Grpc,4,optional" form:"Grpc" json:"Grpc,omitempty" query:"Grpc"`
-	LoadBalance   *ServiceLoadBalancePart   `thrift:"LoadBalance,5,optional" form:"LoadBalance" json:"LoadBalance,omitempty" query:"LoadBalance"`
-	AccessControl *ServiceAccessControlPart `thrift:"AccessControl,6,optional" form:"AccessControl" json:"AccessControl,omitempty" query:"AccessControl"`
+	Info          *ServiceInfoPart          `thrift:"Info,1" form:"Info" json:"Info" query:"Info"`
+	Http          *ServiceHttpRulePart      `thrift:"Http,2" form:"Http" json:"Http" query:"Http"`
+	Tcp           *ServiceTcpRulePart       `thrift:"Tcp,3" form:"Tcp" json:"Tcp" query:"Tcp"`
+	Grpc          *ServiceGRPCRulePart      `thrift:"Grpc,4" form:"Grpc" json:"Grpc" query:"Grpc"`
+	LoadBalance   *ServiceLoadBalancePart   `thrift:"LoadBalance,5" form:"LoadBalance" json:"LoadBalance" query:"LoadBalance"`
+	AccessControl *ServiceAccessControlPart `thrift:"AccessControl,6" form:"AccessControl" json:"AccessControl" query:"AccessControl"`
 }
 
 func NewServiceDetailResponse() *ServiceDetailResponse {
@@ -8779,16 +8779,14 @@ WriteStructEndError:
 }
 
 func (p *ServiceDetailResponse) writeField1(oprot thrift.TProtocol) (err error) {
-	if p.IsSetInfo() {
-		if err = oprot.WriteFieldBegin("Info", thrift.STRUCT, 1); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := p.Info.Write(oprot); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
+	if err = oprot.WriteFieldBegin("Info", thrift.STRUCT, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Info.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
 	}
 	return nil
 WriteFieldBeginError:
@@ -8797,16 +8795,14 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 func (p *ServiceDetailResponse) writeField2(oprot thrift.TProtocol) (err error) {
-	if p.IsSetHttp() {
-		if err = oprot.WriteFieldBegin("Http", thrift.STRUCT, 2); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := p.Http.Write(oprot); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
+	if err = oprot.WriteFieldBegin("Http", thrift.STRUCT, 2); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Http.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
 	}
 	return nil
 WriteFieldBeginError:
@@ -8815,16 +8811,14 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 func (p *ServiceDetailResponse) writeField3(oprot thrift.TProtocol) (err error) {
-	if p.IsSetTcp() {
-		if err = oprot.WriteFieldBegin("Tcp", thrift.STRUCT, 3); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := p.Tcp.Write(oprot); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
+	if err = oprot.WriteFieldBegin("Tcp", thrift.STRUCT, 3); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Tcp.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
 	}
 	return nil
 WriteFieldBeginError:
@@ -8833,16 +8827,14 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
 }
 func (p *ServiceDetailResponse) writeField4(oprot thrift.TProtocol) (err error) {
-	if p.IsSetGrpc() {
-		if err = oprot.WriteFieldBegin("Grpc", thrift.STRUCT, 4); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := p.Grpc.Write(oprot); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
+	if err = oprot.WriteFieldBegin("Grpc", thrift.STRUCT, 4); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Grpc.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
 	}
 	return nil
 WriteFieldBeginError:
@@ -8851,16 +8843,14 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
 }
 func (p *ServiceDetailResponse) writeField5(oprot thrift.TProtocol) (err error) {
-	if p.IsSetLoadBalance() {
-		if err = oprot.WriteFieldBegin("LoadBalance", thrift.STRUCT, 5); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := p.LoadBalance.Write(oprot); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
+	if err = oprot.WriteFieldBegin("LoadBalance", thrift.STRUCT, 5); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.LoadBalance.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
 	}
 	return nil
 WriteFieldBeginError:
@@ -8869,16 +8859,14 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
 }
 func (p *ServiceDetailResponse) writeField6(oprot thrift.TProtocol) (err error) {
-	if p.IsSetAccessControl() {
-		if err = oprot.WriteFieldBegin("AccessControl", thrift.STRUCT, 6); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := p.AccessControl.Write(oprot); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
+	if err = oprot.WriteFieldBegin("AccessControl", thrift.STRUCT, 6); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.AccessControl.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
 	}
 	return nil
 WriteFieldBeginError:

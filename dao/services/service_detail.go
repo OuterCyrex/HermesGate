@@ -14,12 +14,12 @@ type ServiceDetail struct {
 func (sd *ServiceDetail) ToHttpResponse() *services.ServiceDetailResponse {
 
 	detail := &services.ServiceDetailResponse{
-		Info:          nil,
-		Http:          nil,
-		Tcp:           nil,
-		Grpc:          nil,
-		LoadBalance:   nil,
-		AccessControl: nil,
+		Info:          &services.ServiceInfoPart{},
+		Http:          &services.ServiceHttpRulePart{},
+		Tcp:           &services.ServiceTcpRulePart{},
+		Grpc:          &services.ServiceGRPCRulePart{},
+		LoadBalance:   &services.ServiceLoadBalancePart{},
+		AccessControl: &services.ServiceAccessControlPart{},
 	}
 
 	if sd.Info != nil {
@@ -55,10 +55,10 @@ func (sd *ServiceDetail) ToHttpResponse() *services.ServiceDetailResponse {
 
 	if sd.Grpc != nil {
 		detail.Grpc = &services.ServiceGRPCRulePart{
-			ID:          int32(sd.Grpc.ID),
-			ServiceID:   int32(sd.Grpc.ServiceID),
-			Port:        int32(sd.Grpc.Port),
-			HeaderTrans: sd.Grpc.HeaderTransfer,
+			ID:             int32(sd.Grpc.ID),
+			ServiceID:      int32(sd.Grpc.ServiceID),
+			Port:           int32(sd.Grpc.Port),
+			HeaderTransfer: sd.Grpc.HeaderTransfer,
 		}
 	}
 

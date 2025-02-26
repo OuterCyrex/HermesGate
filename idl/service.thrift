@@ -43,11 +43,11 @@ struct ServiceAddHTTPRequest {
     10: required i8 openAuth (api.body="open_auth" api.vd="$ <= 1 && $ >= 0")
     11: string blackList (api.body="black_list")
     12: string whiteList (api.body="white_list")
-    13: i32 clientIPFlowLimit (api.body="client_ip_flow_limit")
+    13: i32 clientIPFlowLimit (api.body="clientip_flow_limit")
     14: i32 serviceFlowLimit (api.body="service_flow_limit")
     15: required i8 roundType (api.body="round_type" api.vd="$ <= 2 && $ >= 0")
     16: required string ipList (api.body="ip_list")
-    17: required string weightList (api.body="weightList")
+    17: required string weightList (api.body="weight_list")
     18: i32 upstreamConnectTimeout (api.body="upstream_connect_timeout")
     19: i32 upstreamHeaderTimeout (api.body="upstream_header_timeout")
     20: i32 upstreamIdleTimeout (api.body="upstream_idle_timeout")
@@ -64,11 +64,11 @@ struct ServiceUpdateHTTPRequest {
     7: required i8 openAuth (api.body="open_auth" api.vd="$ <= 1 && $ >= 0")
     8: string blackList (api.body="black_list")
     9: string whiteList (api.body="white_list")
-    10: i32 clientIPFlowLimit (api.body="client_ip_flow_limit")
+    10: i32 clientIPFlowLimit (api.body="clientip_flow_limit")
     11: i32 serviceFlowLimit (api.body="service_flow_limit")
     12: required i8 roundType (api.body="round_type" api.vd="$ <= 2 && $ >= 0")
     13: required string ipList (api.body="ip_list")
-    14: required string weightList (api.body="weightList")
+    14: required string weightList (api.body="weight_list")
     15: i32 upstreamConnectTimeout (api.body="upstream_connect_timeout")
     16: i32 upstreamHeaderTimeout (api.body="upstream_header_timeout")
     17: i32 upstreamIdleTimeout (api.body="upstream_idle_timeout")
@@ -84,11 +84,11 @@ struct ServiceAddGrpcRequest {
     6: string blackList (api.body="black_list")
     7: string whiteList (api.body="white_list")
     8: string whiteHostName (api.body="white_host_name")
-    9: i32 clientIPFlowLimit (api.body="client_ip_flow_limit")
+    9: i32 clientIPFlowLimit (api.body="clientip_flow_limit")
     10: i32 serviceFlowLimit (api.body="service_flow_limit")
     11: required i8 roundType (api.body="round_type" api.vd="$ <= 2 && $ >= 0")
     12: required string ipList (api.body="ip_list")
-    13: required string weightList (api.body="weightList")
+    13: required string weightList (api.body="weight_list")
     14: string forbidList (api.body="forbid_list")
 }
 
@@ -99,11 +99,11 @@ struct ServiceUpdateGrpcRequest {
     4: string blackList (api.body="black_list")
     5: string whiteList (api.body="white_list")
     6: string whiteHostName (api.body="white_host_name")
-    7: i32 clientIPFlowLimit (api.body="client_ip_flow_limit")
+    7: i32 clientIPFlowLimit (api.body="clientip_flow_limit")
     8: i32 serviceFlowLimit (api.body="service_flow_limit")
     9: required i8 roundType (api.body="round_type" api.vd="$ <= 2 && $ >= 0")
     10: required string ipList (api.body="ip_list")
-    11: required string weightList (api.body="weightList")
+    11: required string weightList (api.body="weight_list")
     12: string forbidList (api.body="forbid_list")
 }
 
@@ -163,7 +163,7 @@ struct ServiceGRPCRulePart {
     1: i32 ID
     2: i32 ServiceID
     3: i32 Port
-    4: string HeaderTrans
+    4: string HeaderTransfer
 }
 
 struct ServiceTcpRulePart {
@@ -200,12 +200,12 @@ struct ServiceAccessControlPart {
 }
 
 struct ServiceDetailResponse {
-    1: optional ServiceInfoPart Info
-    2: optional ServiceHttpRulePart Http
-    3: optional ServiceTcpRulePart Tcp
-    4: optional ServiceGRPCRulePart Grpc
-    5: optional ServiceLoadBalancePart LoadBalance
-    6: optional ServiceAccessControlPart AccessControl
+    1: ServiceInfoPart Info
+    2: ServiceHttpRulePart Http
+    3: ServiceTcpRulePart Tcp
+    4: ServiceGRPCRulePart Grpc
+    5: ServiceLoadBalancePart LoadBalance
+    6: ServiceAccessControlPart AccessControl
 }
 
 struct ServiceDetailRequest {

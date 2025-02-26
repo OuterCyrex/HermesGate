@@ -193,8 +193,7 @@ func (p *AdminLoginRequest) String() string {
 }
 
 type AdminLoginResponse struct {
-	Token   string `thrift:"token,1" form:"token" json:"token" query:"token"`
-	Message string `thrift:"message,2" form:"message" json:"message" query:"message"`
+	Token string `thrift:"token,1" form:"token" json:"token" query:"token"`
 }
 
 func NewAdminLoginResponse() *AdminLoginResponse {
@@ -208,13 +207,8 @@ func (p *AdminLoginResponse) GetToken() (v string) {
 	return p.Token
 }
 
-func (p *AdminLoginResponse) GetMessage() (v string) {
-	return p.Message
-}
-
 var fieldIDToName_AdminLoginResponse = map[int16]string{
 	1: "token",
-	2: "message",
 }
 
 func (p *AdminLoginResponse) Read(iprot thrift.TProtocol) (err error) {
@@ -238,14 +232,6 @@ func (p *AdminLoginResponse) Read(iprot thrift.TProtocol) (err error) {
 		case 1:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -291,17 +277,6 @@ func (p *AdminLoginResponse) ReadField1(iprot thrift.TProtocol) error {
 	p.Token = _field
 	return nil
 }
-func (p *AdminLoginResponse) ReadField2(iprot thrift.TProtocol) error {
-
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		_field = v
-	}
-	p.Message = _field
-	return nil
-}
 
 func (p *AdminLoginResponse) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -311,10 +286,6 @@ func (p *AdminLoginResponse) Write(oprot thrift.TProtocol) (err error) {
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
 			goto WriteFieldError
 		}
 	}
@@ -350,22 +321,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-func (p *AdminLoginResponse) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("message", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Message); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *AdminLoginResponse) String() string {

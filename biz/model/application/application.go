@@ -13,8 +13,8 @@ type AppAddHttpRequest struct {
 	Name     string `thrift:"name,2,required" form:"name,required" json:"name,required" vd:"len($) < 128 && len($) > 0"`
 	Secret   string `thrift:"secret,3" form:"secret" json:"secret"`
 	WhiteIPS string `thrift:"whiteIPS,4" form:"white_ips" json:"white_ips"`
-	Qpd      int64  `thrift:"qpd,5" form:"qpd" json:"qpd" vd:"$ > 0"`
-	QPS      int64  `thrift:"qps,6" form:"qps" json:"qps" vd:"$ > 0"`
+	Qpd      int64  `thrift:"qpd,5" form:"qpd" json:"qpd"`
+	QPS      int64  `thrift:"qps,6" form:"qps" json:"qps"`
 }
 
 func NewAppAddHttpRequest() *AppAddHttpRequest {
@@ -1895,8 +1895,8 @@ type AppUpdateRequest struct {
 	Name     string `thrift:"name,2,required" form:"name,required" json:"name,required" vd:"len($) < 128 && len($) > 0"`
 	Secret   string `thrift:"secret,3" form:"secret" json:"secret"`
 	WhiteIPS string `thrift:"whiteIPS,4" form:"white_ips" json:"white_ips"`
-	Qpd      int64  `thrift:"qpd,5" form:"qpd" json:"qpd" vd:"$ > 0"`
-	QPS      int64  `thrift:"qps,6" form:"qps" json:"qps" vd:"$ > 0"`
+	Qpd      int64  `thrift:"qpd,5" form:"qpd" json:"qpd"`
+	QPS      int64  `thrift:"qps,6" form:"qps" json:"qps"`
 }
 
 func NewAppUpdateRequest() *AppUpdateRequest {

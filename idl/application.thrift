@@ -5,8 +5,8 @@ struct AppAddHttpRequest {
     2: required string name (api.body="name"  api.vd="len($) < 128 && len($) > 0")
     3: string secret (api.body="secret")
     4: string whiteIPS (api.body="white_ips")
-    5: i64 qpd (api.body="qpd" api.vd="$ > 0")
-    6: i64 qps (api.body="qps" api.vd="$ > 0")
+    5: i64 qpd (api.body="qpd")
+    6: i64 qps (api.body="qps")
 }
 
 struct AppDetailRequest {
@@ -51,8 +51,8 @@ struct AppUpdateRequest {
     2: required string name (api.body="name"  api.vd="len($) < 128 && len($) > 0")
     3: string secret (api.body="secret")
     4: string whiteIPS (api.body="white_ips")
-    5: i64 qpd (api.body="qpd" api.vd="$ > 0")
-    6: i64 qps (api.body="qps" api.vd="$ > 0")
+    5: i64 qpd (api.body="qpd")
+    6: i64 qps (api.body="qps")
 }
 
 struct MessageResponse {

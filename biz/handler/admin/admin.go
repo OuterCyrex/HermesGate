@@ -58,8 +58,7 @@ func AdminLogin(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp := admin.AdminLoginResponse{
-		Token:   user.Username,
-		Message: "登陆成功",
+		Token: user.Username,
 	}
 
 	c.JSON(http.StatusOK, resp)
@@ -134,15 +133,6 @@ func ChangePassword(ctx context.Context, c *app.RequestContext) {
 
 	resp := admin.MessageResponse{
 		Message: "更新成功",
-	}
-
-	sess := sessions.Default(c)
-	sess.Delete(sessionKey.AdminSessionInfoKey)
-	err = sess.Save()
-	if err != nil {
-		hlog.Errorf("save session error, %v", err.Error())
-		status.ErrToHttpResponse(c, err)
-		return
 	}
 
 	c.JSON(consts.StatusOK, resp)

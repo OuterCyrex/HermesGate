@@ -4,12 +4,21 @@ package main
 
 import (
 	handler "GoGateway/biz/handler"
+	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"time"
 )
 
 // customizeRegister registers customize routers.
 func customizedRegister(r *server.Hertz) {
+
 	r.GET("/ping", handler.Ping)
 
-	// your code ...
+	r.StaticFS("/", &app.FS{
+		Root:               "./web/dist",
+		IndexNames:         []string{"index.html"},
+		GenerateIndexPages: true,
+		Compress:           true,
+		CacheDuration:      time.Second * 10,
+	})
 }

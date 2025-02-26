@@ -7,7 +7,6 @@ struct AdminLoginRequest {
 
 struct AdminLoginResponse {
     1: string token
-    2: string message
 }
 
 struct AdminInfoResponse {

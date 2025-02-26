@@ -378,11 +378,11 @@ func (s *ServiceInfoSvcLayer) UpdateTcpService(req services.ServiceUpdateTcpRequ
 		return status.Errorf(codes.InternalError, err.Error())
 	}
 
-	// httpRule
+	// tcpRule
 	if err := tx.Save(&serviceDAO.ServiceTcpRule{
-		ID:        serviceDetail.Grpc.ID,
-		ServiceID: serviceDetail.Grpc.ServiceID,
-		Port:      serviceDetail.Grpc.Port,
+		ID:        serviceDetail.Tcp.ID,
+		ServiceID: serviceDetail.Tcp.ServiceID,
+		Port:      serviceDetail.Tcp.Port,
 	}).Error; err != nil {
 		tx.Rollback()
 		return status.Errorf(codes.InternalError, err.Error())
