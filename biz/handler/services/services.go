@@ -53,7 +53,7 @@ func ServiceList(ctx context.Context, c *app.RequestContext) {
 
 		serviceAddr := "unknown"
 
-		clusterInfo := conf.GetConfig().Cluster
+		clusterInfo := conf.GetConfig().DashBoard.Cluster
 
 		switch serviceDetail.Info.LoadType {
 		case serviceConsts.ServiceLoadTypeHTTP:

@@ -4,6 +4,7 @@ import (
 	"GoGateway/biz/model/services"
 	"GoGateway/dao"
 	"GoGateway/pkg/consts/codes"
+	serviceConsts "GoGateway/pkg/consts/service"
 	"GoGateway/pkg/status"
 	"gorm.io/gorm"
 )
@@ -49,13 +50,57 @@ func (s *ServiceInfo) ToHttpResponse(addr string, nodes int) *services.ServiceLi
 type ServiceInfoRepository struct{}
 
 func (s *ServiceInfoRepository) Delete(id uint) error {
-	result := dao.DB.Delete(&ServiceInfo{}, id)
-	if result.Error != nil {
-		return result.Error
-	}
+	tx := dao.DB.Begin()
+	var info ServiceInfo
+
+	result := tx.Where(&ServiceInfo{Model: gorm.Model{ID: id}}).First(&info)
 	if result.RowsAffected == 0 {
+		tx.Rollback()
 		return status.Errorf(codes.NotFound, "服务信息不存在")
 	}
+
+	result = tx.Delete(&ServiceInfo{}, id)
+	if result.Error != nil {
+		tx.Rollback()
+		return status.Errorf(codes.InternalError, result.Error.Error())
+	}
+
+	switch info.LoadType {
+	case serviceConsts.ServiceLoadTypeHTTP:
+		tx.Where(&ServiceHttpRule{ServiceID: id}).Delete(&ServiceHttpRule{})
+		if tx.Error != nil {
+			tx.Rollback()
+			return status.Errorf(codes.InternalError, result.Error.Error())
+		}
+	case serviceConsts.ServiceLoadTypeGRPC:
+		tx.Where(&ServiceGRPCRule{ServiceID: id}).Delete(&ServiceGRPCRule{})
+		if tx.Error != nil {
+			tx.Rollback()
+			return status.Errorf(codes.InternalError, result.Error.Error())
+		}
+
+	case serviceConsts.ServiceLoadTypeTCP:
+		tx.Where(&ServiceTcpRule{ServiceID: id}).Delete(&ServiceTcpRule{})
+		if tx.Error != nil {
+			tx.Rollback()
+			return status.Errorf(codes.InternalError, result.Error.Error())
+		}
+	}
+
+	tx.Where(ServiceAccessControl{ServiceID: id}).Delete(&ServiceAccessControl{})
+	if tx.Error != nil {
+		tx.Rollback()
+		return status.Errorf(codes.InternalError, result.Error.Error())
+	}
+
+	tx.Where(ServiceLoadBalance{ServiceID: id}).Delete(&ServiceLoadBalance{})
+	if tx.Error != nil {
+		tx.Rollback()
+		return status.Errorf(codes.InternalError, result.Error.Error())
+	}
+
+	tx.Commit()
+
 	return nil
 }
 

@@ -25,10 +25,10 @@ func InitDB(dsn string) {
 
 func DefaultDSN() string {
 	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&&parseTime=True&loc=Local",
-		conf.GetConfig().Mysql.Username,
-		conf.GetConfig().Mysql.Password,
-		conf.GetConfig().Mysql.Host,
-		conf.GetConfig().Mysql.Port,
+		conf.GetConfig().DashBoard.Mysql.Username,
+		conf.GetConfig().DashBoard.Mysql.Password,
+		conf.GetConfig().DashBoard.Mysql.Host,
+		conf.GetConfig().DashBoard.Mysql.Port,
 		"gogateway",
 	)
 }

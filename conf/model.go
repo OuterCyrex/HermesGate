@@ -1,6 +1,11 @@
 package conf
 
 type MainConfig struct {
+	DashBoard   DashBoardConfig   `mapstructure:"dashboard"`
+	ProxyServer ProxyServerConfig `mapstructure:"proxy_server"`
+}
+
+type DashBoardConfig struct {
 	Host  string `mapstructure:"host"`
 	Port  int    `mapstructure:"port"`
 	Mysql struct {
@@ -19,4 +24,13 @@ type MainConfig struct {
 		Port    int    `mapstructure:"port"`
 		SSLPort int    `mapstructure:"ssl_port"`
 	}
+}
+
+type ProxyServerConfig struct {
+	HttpProxy HttpProxyConfig `mapstructure:"http"`
+}
+
+type HttpProxyConfig struct {
+	Host string `mapstructure:"host"`
+	Port int    `mapstructure:"port"`
 }
