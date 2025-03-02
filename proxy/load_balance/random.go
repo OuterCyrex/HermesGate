@@ -9,8 +9,11 @@ import (
 
 type RandomBalance struct {
 	curIndex int
-	rss      []string
-	conf     LoadBalanceConf
+
+	// rss is the list of internet resources, referring to ip list
+	rss []string
+
+	conf LoadBalanceConf
 }
 
 func (r *RandomBalance) Add(params ...string) error {
@@ -37,6 +40,7 @@ func (r *RandomBalance) SetConf(conf LoadBalanceConf) {
 	r.conf = conf
 }
 
+// Update Inserts the loadBalanceConf into balance instance
 func (r *RandomBalance) Update() {
 	if conf, ok := r.conf.(*LoadBalanceCheckConf); ok {
 		r.rss = nil
