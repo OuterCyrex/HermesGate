@@ -20,7 +20,7 @@ import (
 )
 
 var (
-	endpoint = flag.String("endpoint", "", "input endpoint like dashboard or proxy-server")
+	endpoint = flag.String("endpoint", "proxy-server", "input endpoint like dashboard or proxy-server")
 )
 
 func main() {

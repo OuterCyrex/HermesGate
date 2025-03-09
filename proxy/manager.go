@@ -34,6 +34,7 @@ func init() {
 	ServiceManagerHandler = NewServiceManager()
 }
 
+// LoadOnce 用于将服务信息存入内存
 func (s *ServiceManager) LoadOnce() error {
 	s.init.Do(func() {
 		svc := serviceSVC.ServiceInfoSvcLayer{}
@@ -60,12 +61,13 @@ func (s *ServiceManager) LoadOnce() error {
 	return s.err
 }
 
+// GetHttpDetail 用于根据用户访问的url获取对应的serviceDetail对象
 func (s *ServiceManager) GetHttpDetail(c *app.RequestContext) (*serviceDAO.ServiceDetail, error) {
 	host := string(c.Request.Host())
 
 	idx := strings.Index(host, ":")
 	if idx != -1 {
-		host = host[strings.Index(host, ":")+1:]
+		host = host[:strings.Index(host, ":")]
 	}
 
 	path := string(c.Request.Path())
@@ -77,7 +79,11 @@ func (s *ServiceManager) GetHttpDetail(c *app.RequestContext) (*serviceDAO.Servi
 
 		switch item.Http.RuleType {
 		case serviceConsts.HTTPRuleTypeDomain:
-			return item, nil
+			if item.Http.Rule == host {
+				return item, nil
+			} else {
+				continue
+			}
 		case serviceConsts.HTTPRuleTypePrefixURL:
 			if strings.HasPrefix(path, item.Http.Rule) {
 				return item, nil

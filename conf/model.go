@@ -19,18 +19,10 @@ type DashBoardConfig struct {
 		Port     int    `mapstructure:"port"`
 		Password string `mapstructure:"password"`
 	} `mapstructure:"redis"`
-	Cluster struct {
-		IP      string `mapstructure:"ip"`
-		Port    int    `mapstructure:"port"`
-		SSLPort int    `mapstructure:"ssl_port"`
-	}
 }
 
 type ProxyServerConfig struct {
-	HttpProxy HttpProxyConfig `mapstructure:"http"`
-}
-
-type HttpProxyConfig struct {
-	Host string `mapstructure:"host"`
-	Port int    `mapstructure:"port"`
+	Host      string `mapstructure:"host"`
+	HttpPort  int    `mapstructure:"http_port"`
+	HttpsPort int    `mapstructure:"https_port"`
 }

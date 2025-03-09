@@ -53,23 +53,23 @@ func ServiceList(ctx context.Context, c *app.RequestContext) {
 
 		serviceAddr := "unknown"
 
-		clusterInfo := conf.GetConfig().DashBoard.Cluster
+		proxyInfo := conf.GetConfig().ProxyServer
 
 		switch serviceDetail.Info.LoadType {
 		case serviceConsts.ServiceLoadTypeHTTP:
-			port := clusterInfo.Port
+			port := proxyInfo.HttpPort
 			if serviceDetail.Http.NeedHttps == 1 {
-				port = clusterInfo.SSLPort
+				port = proxyInfo.HttpsPort
 			}
 			if serviceDetail.Http.RuleType == serviceConsts.HTTPRuleTypePrefixURL {
-				serviceAddr = fmt.Sprintf("%s:%d.%s", clusterInfo.IP, port, serviceDetail.Http.Rule)
+				serviceAddr = fmt.Sprintf("%s:%d.%s", proxyInfo.Host, port, serviceDetail.Http.Rule)
 			} else if serviceDetail.Http.RuleType == serviceConsts.HTTPRuleTypeDomain {
 				serviceAddr = serviceDetail.Http.Rule
 			}
 		case serviceConsts.ServiceLoadTypeGRPC:
-			serviceAddr = fmt.Sprintf("%s:%d", clusterInfo.IP, serviceDetail.Grpc.Port)
+			serviceAddr = fmt.Sprintf("%s:%d", proxyInfo.Host, serviceDetail.Grpc.Port)
 		case serviceConsts.ServiceLoadTypeTCP:
-			serviceAddr = fmt.Sprintf("%s:%d", clusterInfo.IP, serviceDetail.Tcp.Port)
+			serviceAddr = fmt.Sprintf("%s:%d", proxyInfo.Host, serviceDetail.Tcp.Port)
 		default:
 			hlog.Errorf("service type not support: %v", serviceDetail.Info.LoadType)
 			c.JSON(http.StatusInternalServerError, "服务器内部错误")
