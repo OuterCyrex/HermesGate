@@ -9,17 +9,25 @@ import (
 	"testing"
 )
 
-func TestReverseProxy(t *testing.T) {
-	h := server.New(server.WithHostPorts("127.0.0.1:8080"))
+func TestReverseProxy1(t *testing.T) {
+	h := server.New(server.WithHostPorts("127.0.0.1:8081"))
+
+	h.GET("/user", func(ctx context.Context, c *app.RequestContext) {
+		c.JSON(http.StatusOK, utils.H{
+			"msg": "8081收到",
+		})
+	})
+
+	h.Spin()
+}
+
+func TestReverseProxy2(t *testing.T) {
+	h := server.New(server.WithHostPorts("127.0.0.1:8082"))
 
 	h.GET("/user", func(ctx context.Context, c *app.RequestContext) {
 
 		c.JSON(http.StatusOK, utils.H{
-			"host":       string(c.Request.Host()),
-			"RequestURI": string(c.Request.RequestURI()),
-			"Path":       string(c.Request.Path()),
-			"Schema":     string(c.Request.Scheme()),
-			"uri":        c.Request.URI().String(),
+			"msg": "8082收到",
 		})
 	})
 
