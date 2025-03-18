@@ -5,7 +5,6 @@ import (
 	"GoGateway/pkg/status"
 	"GoGateway/proxy"
 	"context"
-	"fmt"
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -17,7 +16,6 @@ func HttpAccessMiddleware() app.HandlerFunc {
 			c.Abort()
 			return
 		}
-		fmt.Println(detail)
 		setServiceDetail(c, detail)
 		c.Next(ctx)
 	}

@@ -45,7 +45,7 @@ func (r *RandomBalance) Update() {
 	if conf, ok := r.conf.(*LoadBalanceCheckConf); ok {
 		r.rss = nil
 		for _, ip := range conf.GetConf() {
-			_ = r.Add(strings.Split(ip, ",")...)
+			_ = r.Add(strings.Split(ip, ",")[0])
 		}
 	}
 }

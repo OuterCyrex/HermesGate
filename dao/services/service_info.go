@@ -6,6 +6,7 @@ import (
 	"GoGateway/pkg/consts/codes"
 	serviceConsts "GoGateway/pkg/consts/service"
 	"GoGateway/pkg/status"
+	"GoGateway/proxy/redis_counter"
 	"gorm.io/gorm"
 )
 
@@ -33,6 +34,8 @@ func (s *ServiceInfo) ToHttpResponse(addr string, nodes int) *services.ServiceLi
 		loadType = "grpc"
 	}
 
+	counter := redisCounter.ServiceFlowCountHandler.GetCounter(s.ServiceName)
+
 	return &services.ServiceListItemResponse{
 		Id:          int32(s.ID),
 		ServiceName: s.ServiceName,
@@ -40,8 +43,8 @@ func (s *ServiceInfo) ToHttpResponse(addr string, nodes int) *services.ServiceLi
 		LoadType:    loadType,
 		ServiceAddr: addr,
 		TotalNode:   int32(nodes),
-		QPS:         0,
-		Qpd:         0,
+		QPS:         counter.QPS,
+		Qpd:         counter.TotalCount,
 	}
 }
 

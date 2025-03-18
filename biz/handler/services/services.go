@@ -5,10 +5,12 @@ package services
 import (
 	services "GoGateway/biz/model/services"
 	"GoGateway/conf"
+	"GoGateway/dao"
 	serviceDAO "GoGateway/dao/services"
 	"GoGateway/pkg/consts/codes"
 	serviceConsts "GoGateway/pkg/consts/service"
 	"GoGateway/pkg/status"
+	redisCounter "GoGateway/proxy/redis_counter"
 	serviceSVC "GoGateway/svc/services"
 	"context"
 	"errors"
@@ -231,15 +233,29 @@ func ServiceStatic(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
+	var info serviceDAO.ServiceInfo
+
+	dao.DB.Where(&serviceDAO.ServiceInfo{Model: gorm.Model{ID: uint(req.ID)}}).Find(&info)
+
+	counter := redisCounter.RedisCounter{ServiceName: info.ServiceName}
+
+	yesterdayTime := time.Now().Add(time.Hour * 24 * -1)
+
+	begin := time.Date(yesterdayTime.Year(), yesterdayTime.Month(), yesterdayTime.Day(), 0, 0, 0, 0, time.Local)
+
 	var today []int64
 	var yesterday []int64
 
-	for i := 0; i <= time.Now().Hour(); i++ {
-		today = append(today, 0)
+	for i := 0; i <= 23; i++ {
+		data, _ := counter.HourCount(begin)
+		yesterday = append(yesterday, data)
+		begin = begin.Add(time.Hour * 1)
 	}
 
-	for i := 0; i <= 23; i++ {
-		yesterday = append(yesterday, 0)
+	for i := 0; i <= time.Now().Hour(); i++ {
+		data, _ := counter.HourCount(begin)
+		today = append(today, data)
+		begin = begin.Add(time.Hour * 1)
 	}
 
 	c.JSON(consts.StatusOK, services.ServiceStatResponse{

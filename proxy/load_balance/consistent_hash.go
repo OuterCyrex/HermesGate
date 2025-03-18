@@ -100,7 +100,7 @@ func (c *ConsistentHashBalance) Update() {
 		c.keys = nil
 		c.hashMap = map[uint32]string{}
 		for _, ip := range conf.GetConf() {
-			_ = c.Add(strings.Split(ip, ",")...)
+			_ = c.Add(strings.Split(ip, ",")[0])
 		}
 	}
 }

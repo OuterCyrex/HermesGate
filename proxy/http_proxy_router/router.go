@@ -18,6 +18,9 @@ func InitHttpProxyRouter() func(ctx context.Context) (err error) {
 	s.Use(middleware.AccessLog())
 	s.Use(
 		http_proxy_middleware.HttpAccessMiddleware(),
+		http_proxy_middleware.HttpBlackListMiddleware(),
+		http_proxy_middleware.HttpRewriteHeaderMiddleware(),
+		http_proxy_middleware.HttpFlowCountMiddleware(),
 		http_proxy_middleware.HttpReverseProxyMiddleware(),
 	)
 

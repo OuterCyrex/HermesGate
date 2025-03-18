@@ -42,6 +42,7 @@ func dashBoardEndPoint() {
 	hlog.SetOutput(os.Stdout)
 
 	dao.InitDB(dao.DefaultDSN())
+	pkg.InitRedis()
 
 	addr := fmt.Sprintf("%s:%d", conf.GetConfig().DashBoard.Host, conf.GetConfig().DashBoard.Port)
 
@@ -59,6 +60,7 @@ func proxyServerEndPoint() {
 	hlog.SetOutput(os.Stdout)
 
 	dao.InitDB(dao.DefaultDSN())
+	pkg.InitRedis()
 
 	err := proxy.ServiceManagerHandler.LoadOnce()
 	if err != nil {

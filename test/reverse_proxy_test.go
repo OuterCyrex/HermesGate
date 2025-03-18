@@ -14,7 +14,8 @@ func TestReverseProxy1(t *testing.T) {
 
 	h.GET("/user", func(ctx context.Context, c *app.RequestContext) {
 		c.JSON(http.StatusOK, utils.H{
-			"msg": "8081收到",
+			"msg":     "8081收到",
+			"headers": c.Request.Header.Get("Authorization"),
 		})
 	})
 
@@ -27,7 +28,8 @@ func TestReverseProxy2(t *testing.T) {
 	h.GET("/user", func(ctx context.Context, c *app.RequestContext) {
 
 		c.JSON(http.StatusOK, utils.H{
-			"msg": "8082收到",
+			"msg":     "8082收到",
+			"headers": c.Request.Header.Get("Authorization"),
 		})
 	})
 
