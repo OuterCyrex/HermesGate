@@ -11,6 +11,7 @@ func HttpFlowCountMiddleware() app.HandlerFunc {
 		detail := getServiceDetail(c)
 
 		counter := redisCounter.ServiceFlowCountHandler.GetCounter(detail.Info.ServiceName)
+
 		counter.Increase()
 
 		c.Next(ctx)

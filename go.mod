@@ -7,11 +7,13 @@ replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
 require (
 	github.com/apache/thrift v0.21.0
 	github.com/cloudwego/hertz v0.9.5
+	github.com/gomodule/redigo v1.8.9
 	github.com/hertz-contrib/cors v0.1.0
 	github.com/hertz-contrib/reverseproxy v1.0.6
 	github.com/hertz-contrib/sessions v1.0.3
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/viper v1.19.0
+	golang.org/x/time v0.8.0
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.25.12
 )
@@ -24,7 +26,6 @@ require (
 	github.com/cloudwego/netpoll v0.6.5 // indirect
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
-	github.com/gomodule/redigo v1.8.9 // indirect
 	github.com/gorilla/context v1.1.2 // indirect
 	github.com/gorilla/securecookie v1.1.2 // indirect
 	github.com/gorilla/sessions v1.2.2 // indirect
