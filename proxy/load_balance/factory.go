@@ -16,20 +16,6 @@ type LoadBalance interface {
 	Update()
 }
 
-func LoadBalanceFactory(t LoadBalanceType) LoadBalance {
-	switch t {
-	case LoadBalanceRandom:
-		return &RandomBalance{}
-	case LoadBalanceRoundRobin:
-		return &RoundRobinBalance{}
-	case LoadBalanceWeightRoundRobin:
-		return &WeightRoundRobinBalance{}
-	case LoadBalanceConsistentHash:
-		return &ConsistentHashBalance{}
-	}
-	return &RoundRobinBalance{}
-}
-
 func LoadBalanceFactorWithConf(t LoadBalanceType, lbConf LoadBalanceConf) LoadBalance {
 	//观察者模式
 	switch t {

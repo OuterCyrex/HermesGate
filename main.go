@@ -7,8 +7,11 @@ import (
 	"GoGateway/conf"
 	"GoGateway/dao"
 	"GoGateway/pkg"
+	serviceConsts "GoGateway/pkg/consts/service"
 	"GoGateway/proxy"
+	"GoGateway/proxy/grpc_proxy_server"
 	"GoGateway/proxy/http_proxy_router"
+	reloadListener "GoGateway/proxy/redis_listener"
 	"context"
 	"flag"
 	"fmt"
@@ -62,7 +65,18 @@ func proxyServerEndPoint() {
 	dao.InitDB(dao.DefaultDSN())
 	pkg.InitRedis()
 
-	err := proxy.ServiceManagerHandler.LoadOnce()
+	err := proxy.ServiceManagerHandler.Load()
+
+	grpcManager := grpc_proxy_server.NewGrpcServerManager(proxy.ServiceManagerHandler)
+	if err := grpcManager.Serve(); err != nil {
+		panic(err)
+	}
+
+	listener := reloadListener.NewReloadListener(proxy.ServiceBalanceHandler)
+	listener.Add(serviceConsts.ServiceLoadTypeHTTP, proxy.ServiceManagerHandler)
+	listener.Add(serviceConsts.ServiceLoadTypeGRPC, grpcManager)
+	go listener.Listen()
+
 	if err != nil {
 		hlog.Fatalf("load service manager error %v", err)
 	}

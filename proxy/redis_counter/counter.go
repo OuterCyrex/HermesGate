@@ -3,7 +3,7 @@ package redisCounter
 import (
 	"GoGateway/pkg"
 	"GoGateway/pkg/consts/codes"
-	"GoGateway/pkg/consts/counter/redis"
+	"GoGateway/pkg/consts/redis"
 	"GoGateway/pkg/status"
 	"fmt"
 	"github.com/cloudwego/hertz/pkg/common/hlog"

@@ -3,6 +3,7 @@
 package services
 
 import (
+	"GoGateway/biz/middleware"
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -47,8 +48,7 @@ func _updateMw() []app.HandlerFunc {
 }
 
 func _serviceupdatehttpMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{middleware.HotReloadMiddleware}
 }
 
 func _detailMw() []app.HandlerFunc {
@@ -87,8 +87,7 @@ func _grpcMw() []app.HandlerFunc {
 }
 
 func _serviceupdategrpcMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{middleware.HotReloadMiddleware}
 }
 
 func _httpMw() []app.HandlerFunc {

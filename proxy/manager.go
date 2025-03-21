@@ -12,19 +12,15 @@ import (
 )
 
 type ServiceManager struct {
-	ServiceMap   map[string]*serviceDAO.ServiceDetail
-	ServiceSlice []*serviceDAO.ServiceDetail
-	Lock         *sync.RWMutex
-	init         sync.Once
-	err          error
+	ServiceMap map[string]*serviceDAO.ServiceDetail
+	Lock       *sync.RWMutex
+	err        error
 }
 
 func NewServiceManager() *ServiceManager {
 	return &ServiceManager{
-		ServiceMap:   map[string]*serviceDAO.ServiceDetail{},
-		ServiceSlice: []*serviceDAO.ServiceDetail{},
-		Lock:         &sync.RWMutex{},
-		init:         sync.Once{},
+		ServiceMap: map[string]*serviceDAO.ServiceDetail{},
+		Lock:       &sync.RWMutex{},
 	}
 }
 
@@ -34,31 +30,31 @@ func init() {
 	ServiceManagerHandler = NewServiceManager()
 }
 
-// LoadOnce 用于将服务信息存入内存
-func (s *ServiceManager) LoadOnce() error {
-	s.init.Do(func() {
-		svc := serviceSVC.ServiceInfoSvcLayer{}
-		total, _, _ := svc.PageList("", 0, 0)
-		_, serverList, err := svc.PageList("", 1, int32(total))
+// Load 用于将服务信息存入内存
+func (s *ServiceManager) Load() error {
+	svc := serviceSVC.ServiceInfoSvcLayer{}
+	total, _, _ := svc.PageList("", 0, 0)
+	_, serverList, err := svc.PageList("", 1, int32(total))
+	if err != nil {
+		s.err = err
+	}
+
+	for _, server := range serverList {
+		detail, err := svc.ServiceDetail(&server)
 		if err != nil {
 			s.err = err
 		}
-
-		for _, server := range serverList {
-			detail, err := svc.ServiceDetail(&server)
-			if err != nil {
-				s.err = err
-			}
-			s.Lock.Lock()
-			s.ServiceMap[server.ServiceName] = detail
-			s.Lock.Unlock()
-
-			s.ServiceSlice = append(s.ServiceSlice, detail)
-
-		}
-
-	})
+		s.Lock.Lock()
+		s.ServiceMap[server.ServiceName] = detail
+		s.Lock.Unlock()
+	}
 	return s.err
+}
+
+func (s *ServiceManager) Reload(detail *serviceDAO.ServiceDetail) {
+	s.Lock.Lock()
+	defer s.Lock.Unlock()
+	s.ServiceMap[detail.Info.ServiceName] = detail
 }
 
 // GetHttpDetail 用于根据用户访问的url获取对应的serviceDetail对象
@@ -72,7 +68,7 @@ func (s *ServiceManager) GetHttpDetail(c *app.RequestContext) (*serviceDAO.Servi
 
 	path := string(c.Request.Path())
 
-	for _, item := range s.ServiceSlice {
+	for _, item := range s.ServiceMap {
 		if item.Info.LoadType != serviceConsts.ServiceLoadTypeHTTP {
 			continue
 		}

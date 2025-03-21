@@ -15,6 +15,7 @@ type ServiceInfoSvcLayer struct{}
 
 func (s *ServiceInfoSvcLayer) ServiceDetail(dt *serviceDAO.ServiceInfo) (*serviceDAO.ServiceDetail, error) {
 	httpRepository := &serviceDAO.ServiceHttpRuleRepository{}
+
 	httpRule, err := httpRepository.Find(&serviceDAO.ServiceHttpRule{ServiceID: dt.ID})
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, status.Errorf(codes.InternalError, err.Error())

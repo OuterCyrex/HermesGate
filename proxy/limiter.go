@@ -1,7 +1,7 @@
 package proxy
 
 import (
-	raterConsts "GoGateway/pkg/consts/counter/rater"
+	"GoGateway/pkg/consts/rater"
 	"golang.org/x/time/rate"
 	"sync"
 )

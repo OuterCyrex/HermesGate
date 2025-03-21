@@ -10,17 +10,12 @@ import (
 
 // ServiceBalancer 用于存储所有服务的负载均衡策略
 type ServiceBalancer struct {
-	ServiceBalanceList []*ServiceBalanceInfo
-}
-
-type ServiceBalanceInfo struct {
-	ServiceName string
-	LoadBalance *load_balance.LoadBalance
+	ServiceBalanceMap map[string]*load_balance.LoadBalance
 }
 
 func NewServiceBalancer() *ServiceBalancer {
 	return &ServiceBalancer{
-		ServiceBalanceList: make([]*ServiceBalanceInfo, 0),
+		ServiceBalanceMap: make(map[string]*load_balance.LoadBalance),
 	}
 }
 
@@ -34,10 +29,8 @@ func init() {
 func (lbr *ServiceBalancer) GetLoadBalance(detail *serviceDAO.ServiceDetail) (load_balance.LoadBalance, error) {
 
 	// 如果已经存在则不再进行初始化负载均衡
-	for _, lbrItem := range lbr.ServiceBalanceList {
-		if lbrItem.ServiceName == detail.Info.ServiceName {
-			return *lbrItem.LoadBalance, nil
-		}
+	if v, ok := lbr.ServiceBalanceMap[detail.Info.ServiceName]; ok {
+		return *v, nil
 	}
 
 	ipList := strings.Split(detail.LoadBalance.IpList, ",")
@@ -58,11 +51,31 @@ func (lbr *ServiceBalancer) GetLoadBalance(detail *serviceDAO.ServiceDetail) (lo
 
 	lb := load_balance.LoadBalanceFactorWithConf(load_balance.LoadBalanceType(detail.LoadBalance.RoundType), mConf)
 
-	lbItem := &ServiceBalanceInfo{
-		LoadBalance: &lb,
-		ServiceName: detail.Info.ServiceName,
-	}
-	lbr.ServiceBalanceList = append(lbr.ServiceBalanceList, lbItem)
+	lbr.ServiceBalanceMap[detail.Info.ServiceName] = &lb
 
 	return lb, nil
+}
+
+func (lbr *ServiceBalancer) ReloadLoadBalance(detail *serviceDAO.ServiceDetail) error {
+	ipList := strings.Split(detail.LoadBalance.IpList, ",")
+	weightList := strings.Split(detail.LoadBalance.WeightList, ",")
+
+	if len(ipList) != len(weightList) {
+		return status.Errorf(codes.InvalidParams, "IPList And WeightList length not match")
+	}
+
+	ipConfig := map[string]string{}
+
+	// 将ip和权重信息装入负载均衡设置
+	for index, ip := range ipList {
+		ipConfig[ip] = weightList[index]
+	}
+
+	mConf := load_balance.NewLoadBalanceCheckConf("%s", ipConfig)
+
+	lb := load_balance.LoadBalanceFactorWithConf(load_balance.LoadBalanceType(detail.LoadBalance.RoundType), mConf)
+
+	lbr.ServiceBalanceMap[detail.Info.ServiceName] = &lb
+
+	return nil
 }

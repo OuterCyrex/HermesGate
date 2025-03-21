@@ -1,6 +1,8 @@
 package serviceDAO
 
-import "GoGateway/dao"
+import (
+	"GoGateway/dao"
+)
 
 type ServiceLoadBalance struct {
 	ID            uint   `json:"id" gorm:"primary_key"`
