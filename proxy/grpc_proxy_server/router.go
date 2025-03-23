@@ -71,7 +71,9 @@ func (s *GrpcServerManager) Serve() error {
 func (s *GrpcServerManager) Reload(detail *serviceDAO.ServiceDetail) {
 	s.lock.Lock()
 	// 关闭先前的grpc服务
-	s.serverMap[detail.Info.ServiceName].server.GracefulStop()
+	if v, ok := s.serverMap[detail.Info.ServiceName]; ok {
+		v.server.GracefulStop()
+	}
 
 	server, addr := grpc_proxy_middleware.NewGrpcProxyServer(detail)
 	s.serverMap[detail.Info.ServiceName] = &grpcServer{

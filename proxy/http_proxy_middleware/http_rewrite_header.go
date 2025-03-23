@@ -2,7 +2,6 @@ package http_proxy_middleware
 
 import (
 	"context"
-	"fmt"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/utils"
 	"net/http"
@@ -19,8 +18,6 @@ func HttpRewriteHeaderMiddleware() app.HandlerFunc {
 		}
 
 		transfers := strings.Split(detail.Http.HeaderTransfer, ",")
-
-		fmt.Println("transfers:", transfers, len(transfers))
 
 		SetMap := make(map[string]string)
 		var DelList []string

@@ -25,6 +25,16 @@ func newServiceFlowCounter() *ServiceFlowCounter {
 	}
 }
 
+func (h *ServiceFlowCounter) GetAllInfo() (int64, int64) {
+	var total int64
+	var totalQPS int64
+	for _, v := range h.counterMap {
+		total += v.TotalCount
+		totalQPS += v.QPS
+	}
+	return total, totalQPS
+}
+
 var ServiceFlowCountHandler *ServiceFlowCounter
 
 func init() {
@@ -76,6 +86,7 @@ func NewRedisCounter(serviceName string, interval time.Duration) *RedisCounter {
 			current := time.Now()
 			dayKey := counter.DayKey(current)
 			hourKey := counter.HourKey(current)
+			totalHourKey := counter.TotalHourKey(current)
 
 			// 开启 pipeline
 			_, err := Pipeline(
@@ -83,6 +94,8 @@ func NewRedisCounter(serviceName string, interval time.Duration) *RedisCounter {
 				counter.send("EXPIRE", dayKey, 60*60*24*2),
 				counter.send("INCRBY", hourKey, tickerCount),
 				counter.send("EXPIRE", hourKey, 60*60*24*2),
+				counter.send("INCRBY", totalHourKey, tickerCount),
+				counter.send("EXPIRE", totalHourKey, 60*60*24*2),
 			)
 			if err != nil {
 				hlog.Errorf("redis pipeline failed, %s", err.Error())
@@ -135,6 +148,24 @@ func (c *RedisCounter) DayKey(current time.Time) string {
 }
 func (c *RedisCounter) HourKey(current time.Time) string {
 	return fmt.Sprintf("%s_%s_%s", redisConsts.RedisCounterKey, c.ServiceName, current.Format("2006010215"))
+}
+
+func (c *RedisCounter) TotalHourKey(current time.Time) string {
+	return fmt.Sprintf("%s_%s_%s", redisConsts.RedisCounterTotalKey, current.Format("2006010215"))
+}
+
+func (c *RedisCounter) TotalHourCount(current time.Time) (int64, error) {
+	conn := pkg.GetRedis()
+	defer func() {
+		_ = conn.Close()
+	}()
+	result, err := conn.Do("GET", c.TotalHourKey(current))
+	v, ok := result.([]byte)
+	if !ok {
+		return 0, status.Errorf(codes.InternalError, "Redis Internal Error")
+	}
+	count, _ := strconv.Atoi(string(v))
+	return int64(count), err
 }
 
 // Increase 异步原子增加

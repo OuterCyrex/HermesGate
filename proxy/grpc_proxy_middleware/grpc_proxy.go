@@ -33,7 +33,10 @@ func NewGrpcProxyServer(detail *serviceDAO.ServiceDetail) (*grpc.Server, string)
 
 			nextAddr, _ := lb.Get(requestURI)
 
-			dst, err := grpc.NewClient(nextAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+			dst, err := grpc.NewClient(nextAddr,
+				grpc.WithTransportCredentials(insecure.NewCredentials()),
+				grpc.WithStreamInterceptor(GrpcRewriteMetadataMiddleware(detail)),
+			)
 			return ctx, dst, err
 		},
 	)),

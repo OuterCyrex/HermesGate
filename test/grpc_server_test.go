@@ -3,6 +3,7 @@ package test
 import (
 	"context"
 	"fmt"
+	"google.golang.org/grpc/metadata"
 	"log"
 	"net"
 	"testing"
@@ -29,6 +30,7 @@ func TestGrpcServer1(t *testing.T) {
 	s := grpc.NewServer(grpc.UnaryInterceptor(
 		func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
 			fmt.Println("50051")
+			printMetadata(ctx)
 			return handler(ctx, req)
 		},
 	))
@@ -50,6 +52,7 @@ func TestGrpcServer2(t *testing.T) {
 	s := grpc.NewServer(grpc.UnaryInterceptor(
 		func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
 			fmt.Println("50052")
+			printMetadata(ctx)
 			return handler(ctx, req)
 		},
 	))
@@ -59,5 +62,14 @@ func TestGrpcServer2(t *testing.T) {
 	log.Printf("gRPC Server started on port 50052")
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
+	}
+}
+
+func printMetadata(ctx context.Context) {
+	md, ok := metadata.FromIncomingContext(ctx)
+	if ok {
+		for k, v := range md {
+			fmt.Printf("%s: %s\n", k, v)
+		}
 	}
 }

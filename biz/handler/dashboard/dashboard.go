@@ -7,6 +7,7 @@ import (
 	applicationDAO "GoGateway/dao/application"
 	serviceDAO "GoGateway/dao/services"
 	"GoGateway/pkg/status"
+	redisCounter "GoGateway/proxy/redis_counter"
 	dashboardSVC "GoGateway/svc/dashboard"
 	"context"
 	"time"
@@ -26,26 +27,38 @@ func GetPanelData(ctx context.Context, c *app.RequestContext) {
 	dao.DB.Model(&serviceDAO.ServiceInfo{}).Count(&serviceNum)
 	dao.DB.Model(&applicationDAO.Application{}).Count(&appNum)
 
+	total, qps := redisCounter.ServiceFlowCountHandler.GetAllInfo()
+
 	c.JSON(consts.StatusOK, dashboard.PanelDataResponse{
 		ServiceNum:      serviceNum,
 		AppNum:          appNum,
-		CurrentQps:      0,
-		TodayRequestNum: 0,
+		CurrentQps:      qps,
+		TodayRequestNum: total,
 	})
 }
 
 // GetFlowStatistics .
 // @router /dashboard/stat [GET]
 func GetFlowStatistics(ctx context.Context, c *app.RequestContext) {
+	counter := redisCounter.RedisCounter{}
+
+	yesterdayTime := time.Now().Add(time.Hour * 24 * -1)
+
+	begin := time.Date(yesterdayTime.Year(), yesterdayTime.Month(), yesterdayTime.Day(), 0, 0, 0, 0, time.Local)
+
 	var today []int64
 	var yesterday []int64
 
-	for i := 0; i <= time.Now().Hour(); i++ {
-		today = append(today, 0)
+	for i := 0; i <= 23; i++ {
+		data, _ := counter.TotalHourCount(begin)
+		yesterday = append(yesterday, data)
+		begin = begin.Add(time.Hour * 1)
 	}
 
-	for i := 0; i <= 23; i++ {
-		yesterday = append(yesterday, 0)
+	for i := 0; i <= time.Now().Hour(); i++ {
+		data, _ := counter.TotalHourCount(begin)
+		today = append(today, data)
+		begin = begin.Add(time.Hour * 1)
 	}
 
 	resp := dashboard.FlowStatResponse{

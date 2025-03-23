@@ -1,6 +1,7 @@
 package redisConsts
 
 const (
-	RedisCounterKey = "redis_counter"
-	RedisChannelKey = "redis_channel"
+	RedisCounterKey      = "redis_counter"
+	RedisCounterTotalKey = "redis_counter_total"
+	RedisChannelKey      = "redis_channel"
 )
