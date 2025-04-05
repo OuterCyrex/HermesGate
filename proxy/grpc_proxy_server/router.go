@@ -58,10 +58,16 @@ func (s *GrpcServerManager) Serve() error {
 
 			lis, lisErr := net.Listen("tcp", i.addr)
 
+			if lisErr != nil {
+				hlog.Error("grpc proxy server serve error", lisErr)
+				return
+			}
+
 			serverErr := i.server.Serve(lis)
 
-			if err := errors.Join(lisErr, serverErr); err != nil {
-				panic(err)
+			if serverErr != nil {
+				hlog.Error("grpc proxy server serve error", serverErr)
+				return
 			}
 		}()
 	}
