@@ -12,6 +12,7 @@ import (
 	"GoGateway/proxy/grpc_proxy_server"
 	"GoGateway/proxy/http_proxy_router"
 	reloadListener "GoGateway/proxy/redis_listener"
+	tcpRouter "GoGateway/proxy/tcp_router"
 	"context"
 	"flag"
 	"fmt"
@@ -71,6 +72,8 @@ func proxyServerEndPoint() {
 	if err := grpcManager.Serve(); err != nil {
 		panic(err)
 	}
+
+	tcpRouter.InitTCPRouter(proxy.ServiceManagerHandler)
 
 	listener := reloadListener.NewReloadListener(proxy.ServiceBalanceHandler)
 	listener.Add(serviceConsts.ServiceLoadTypeHTTP, proxy.ServiceManagerHandler)

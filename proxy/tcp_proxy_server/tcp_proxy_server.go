@@ -48,6 +48,7 @@ func NewTCPReverseProxy(ctx context.Context, lb load_balance.LoadBalance, option
 	r.DialContext = dialer.DialContext
 
 	r.OnDialError = func(conn net.Conn, err error) {
+		_, _ = conn.Write([]byte(err.Error()))
 		hlog.Errorf("dial error: %v", err)
 		_ = conn.Close()
 	}
@@ -69,16 +70,18 @@ func (trp *TCPReverseProxy) ServeTCP(ctx context.Context, src net.Conn) {
 
 	if err != nil {
 		trp.OnDialError(src, err)
+		return
 	}
 
 	defer func() {
-		go dst.Close()
+		_ = dst.Close()
 	}()
 
 	if trp.keepAlivePeriod > 0 {
-		tcpConn := dst.(*net.TCPConn)
-		_ = tcpConn.SetKeepAlive(true)
-		_ = tcpConn.SetKeepAlivePeriod(trp.keepAlivePeriod)
+		if tcpConn, ok := dst.(*net.TCPConn); ok {
+			_ = tcpConn.SetKeepAlive(true)
+			_ = tcpConn.SetKeepAlivePeriod(trp.keepAlivePeriod)
+		}
 	}
 
 	errChan := make(chan error, 2)

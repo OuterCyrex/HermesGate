@@ -1,4 +1,4 @@
-package tcp_proxy_middleware
+package tcpRouter
 
 import (
 	"context"
@@ -34,7 +34,7 @@ func (c *TCPDialContext) Use(handlers ...TCPHandlerFunc) {
 }
 
 func (c *TCPDialContext) Next() {
-	for c.index < int8(len(c.handler)) {
+	for c.index < int8(len(c.handler))-1 && c.index < abortIndex {
 		c.index++
 		c.handler[c.index](c)
 	}
@@ -45,7 +45,7 @@ func (c *TCPDialContext) Abort() {
 }
 
 func (c *TCPDialContext) Reset() {
-	c.index = 0
+	c.index = -1
 }
 
 func (c *TCPDialContext) IsAborted() bool {
