@@ -3,6 +3,7 @@ package tcp_proxy_server
 import (
 	"GoGateway/proxy/load_balance"
 	"context"
+	"errors"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"io"
 	"net"
@@ -84,22 +85,24 @@ func (trp *TCPReverseProxy) ServeTCP(ctx context.Context, src net.Conn) {
 		}
 	}
 
-	errChan := make(chan error, 2)
+	errChan := make(chan error, 1)
 
-	tcpCopy := func(src, dst net.Conn) {
+	tcpCopy := func(dst, src net.Conn) {
 		copyErr := error(nil)
-		_, copyErr = io.Copy(src, dst)
+		_, copyErr = io.Copy(dst, src)
 		errChan <- copyErr
 	}
+
 	go tcpCopy(dst, src)
 	go tcpCopy(src, dst)
+
+	var netOpErr *net.OpError
 
 	// 阻塞进程，若两个copy均结束则退出并关闭连接
 	for i := 0; i < 2; i++ {
 		err = <-errChan
-		if err != nil && err != io.EOF {
-			hlog.Errorf("tcp proxy error: %v", err)
-			return
+		if err != nil && err != io.EOF && !errors.As(err, &netOpErr) {
+			hlog.Debugf("tcp proxy: %+v", err)
 		}
 	}
 }

@@ -12,7 +12,7 @@ import (
 	"GoGateway/proxy/grpc_proxy_server"
 	"GoGateway/proxy/http_proxy_router"
 	reloadListener "GoGateway/proxy/redis_listener"
-	tcpRouter "GoGateway/proxy/tcp_router"
+	tcpRouter "GoGateway/proxy/tcp_proxy_middleware"
 	"context"
 	"flag"
 	"fmt"

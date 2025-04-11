@@ -4,28 +4,35 @@ import (
 	"context"
 	"math"
 	"net"
+	"strings"
 )
 
 const abortIndex int8 = math.MaxInt8 / 2
 
 type TCPHandlerFunc func(*TCPDialContext)
 type TCPDialContext struct {
-	conn    net.Conn
-	context context.Context
+	Conn    net.Conn
+	Context context.Context
 	handler []TCPHandlerFunc
 	index   int8
 }
 
 func (c *TCPDialContext) Get(key string) interface{} {
-	return c.context.Value(key)
+	return c.Context.Value(key)
 }
 
 func (c *TCPDialContext) Set(key string, value interface{}) {
-	c.context = context.WithValue(c.context, key, value)
+	c.Context = context.WithValue(c.Context, key, value)
 }
 
 func (c *TCPDialContext) ClientIP() string {
-	return c.conn.RemoteAddr().String()
+	addr := c.Conn.RemoteAddr().String()
+	addrSlice := strings.Split(addr, ":")
+	if len(addrSlice) == 2 {
+		return addrSlice[0]
+	} else {
+		return ""
+	}
 }
 
 func (c *TCPDialContext) Use(handlers ...TCPHandlerFunc) {
@@ -33,14 +40,24 @@ func (c *TCPDialContext) Use(handlers ...TCPHandlerFunc) {
 	c.handler = append(c.handler, handlers...)
 }
 
+func (c *TCPDialContext) Write(b []byte) (n int, err error) {
+	return c.Conn.Write(b)
+}
+
+func (c *TCPDialContext) Read(b []byte) (n int, err error) {
+	return c.Conn.Read(b)
+}
+
 func (c *TCPDialContext) Next() {
-	for c.index < int8(len(c.handler))-1 && c.index < abortIndex {
-		c.index++
+	c.index++
+	for c.index < int8(len(c.handler)) && c.index < abortIndex {
 		c.handler[c.index](c)
+		c.index++
 	}
 }
 
 func (c *TCPDialContext) Abort() {
+	_ = c.Conn.Close()
 	c.index = abortIndex
 }
 

@@ -36,8 +36,8 @@ func New(host string) *TCPRouter {
 
 func (r *TCPRouter) TCP(port int, f TCPHandlerFunc) *TCPDialContext {
 	ctx := &TCPDialContext{
-		conn:    nil,
-		context: context.Background(),
+		Conn:    nil,
+		Context: context.Background(),
 		handler: make([]TCPHandlerFunc, 0),
 		index:   -1,
 	}

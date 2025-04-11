@@ -59,7 +59,7 @@ func (ts *TCPServer) ListenAndServe() error {
 			}
 
 			go func() {
-				ts.ctx.conn = conn
+				ts.ctx.Conn = conn
 				ts.ctx.Reset()
 				ts.ctx.Next()
 			}()
