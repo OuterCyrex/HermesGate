@@ -78,6 +78,7 @@ func proxyServerEndPoint() {
 	listener := reloadListener.NewReloadListener(proxy.ServiceBalanceHandler)
 	listener.Add(serviceConsts.ServiceLoadTypeHTTP, proxy.ServiceManagerHandler)
 	listener.Add(serviceConsts.ServiceLoadTypeGRPC, grpcManager)
+	listener.Add(serviceConsts.ServiceLoadTypeTCP, tcpRouter.TcpRouter)
 	go listener.Listen()
 
 	if err != nil {

@@ -1,13 +1,14 @@
 package tcp_proxy_middleware
 
 import (
-	serviceDAO "GoGateway/dao/services"
-	. "GoGateway/proxy/tcp_router"
+	"GoGateway/proxy/tcp_router"
 	"strings"
 )
 
-func TcpBlackListMiddleware(detail *serviceDAO.ServiceDetail) TCPHandlerFunc {
-	return func(c *TCPDialContext) {
+func TcpBlackListMiddleware() tcpRouter.TCPHandlerFunc {
+	return func(c *tcpRouter.TCPDialContext) {
+		detail := c.GetDetail()
+
 		var blackList []string
 		var whiteList []string
 		if detail.AccessControl.BlackList != "" {

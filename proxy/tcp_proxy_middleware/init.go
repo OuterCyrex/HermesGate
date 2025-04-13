@@ -22,13 +22,13 @@ func InitTCPRouter(manager *proxy.ServiceManager) {
 				hlog.Errorf("load balance error: %v", err)
 				return
 			}
-			TcpRouter.TCP(v.Tcp.Port, func(ctx *tcpRouter.TCPDialContext) {
+			TcpRouter.TCP(v, func(ctx *tcpRouter.TCPDialContext) {
 				reverseProxy := tcp_proxy_server.NewTCPReverseProxy(context.Background(), lb)
 				reverseProxy.ServeTCP(ctx.Context, ctx.Conn)
 			}).Use(
-				TcpBlackListMiddleware(v),
-				TcpLimitMiddleware(v),
-				TcpFlowCounterMiddleware(v),
+				TcpBlackListMiddleware(),
+				TcpLimitMiddleware(),
+				TcpFlowCounterMiddleware(),
 			)
 		}
 	}

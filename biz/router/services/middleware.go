@@ -101,8 +101,7 @@ func _tcpMw() []app.HandlerFunc {
 }
 
 func _serviceupdatetcpMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{middleware.HotReloadMiddleware}
 }
 
 func _statMw() []app.HandlerFunc {

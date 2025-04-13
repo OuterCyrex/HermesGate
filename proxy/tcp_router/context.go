@@ -1,13 +1,18 @@
 package tcpRouter
 
 import (
+	serviceDAO "GoGateway/dao/services"
 	"context"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"math"
 	"net"
 	"strings"
 )
 
-const abortIndex int8 = math.MaxInt8 / 2
+const (
+	abortIndex          int8 = math.MaxInt8 / 2
+	TcpServiceDetailKey      = "tcp_service_detail_key"
+)
 
 type TCPHandlerFunc func(*TCPDialContext)
 type TCPDialContext struct {
@@ -15,6 +20,17 @@ type TCPDialContext struct {
 	Context context.Context
 	handler []TCPHandlerFunc
 	index   int8
+}
+
+func (c *TCPDialContext) GetDetail() *serviceDAO.ServiceDetail {
+	v := c.Context.Value(TcpServiceDetailKey)
+	switch v.(type) {
+	case *serviceDAO.ServiceDetail:
+		return v.(*serviceDAO.ServiceDetail)
+	default:
+		hlog.Errorf("detail context not found in TCPDialContext")
+		return nil
+	}
 }
 
 func (c *TCPDialContext) Get(key string) interface{} {

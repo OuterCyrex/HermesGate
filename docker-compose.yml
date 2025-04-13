@@ -1,0 +1,50 @@
+services:
+  proxy-server:
+    build:
+      context: .
+      dockerfile: Dockerfile-ProxyServer
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - mysql
+      - redis
+    volumes:
+      - ./conf/config.yaml:/workspace/conf/config.yaml
+    networks:
+      - net
+
+  dash-board:
+    build:
+      context: .
+      dockerfile: Dockerfile-Dashboard
+    ports:
+      - "9710:9710"
+    depends_on:
+      - mysql
+      - redis
+    volumes:
+      - ./conf/config.yaml:/workspace/conf/config.yaml
+    networks:
+      - net
+
+  mysql:
+    image: mysql:5.7
+    expose:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: GoGateway
+    networks:
+      - net
+
+  redis:
+    image: redis:latest
+    expose:
+      - "6379"
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
