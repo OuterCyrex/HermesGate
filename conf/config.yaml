@@ -1,0 +1,17 @@
+dashboard:
+  host: 0.0.0.0
+  port: 9710
+  mysql:
+    host: mysql
+    port: 3306
+    username: root
+    password: 123456
+  redis:
+    host: redis
+    port: 6379
+    password:
+    database: 0
+proxy_server:
+  host: 0.0.0.0
+  http_port: 80
+  https_port: 443
